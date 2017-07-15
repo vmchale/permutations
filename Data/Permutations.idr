@@ -18,8 +18,6 @@ data Permutation : Nat -> Type where
   Nil : Permutation Z
   (::) : Fin (S n) -> Permutation n -> Permutation (S n)
 
-σ : Permutation n -> Vect n a -> Vect n a
-
 sigma : Permutation n -> Vect n a -> Vect n a
 sigma [] [] = []
 sigma (p::ps) (x::xs) = insert (sigma ps xs) p
@@ -33,6 +31,13 @@ toVector {n} p = sigma p (count n)
   where count : (n : Nat) -> Vect n (Fin n)
         count Z = []
         count (S k) = FZ :: map FS (count k)
+
+implementation Show (Fin n) where
+  show FZ = "0"
+  show (FS k) = show k
+
+implementation Show (Permutation n) where
+  show p = show (toVector p)
 
 id : Permutation n
 id {n=Z} = []
@@ -58,3 +63,9 @@ pi (FS j) (FS k) = FZ :: pi j k
 pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = id
+
+σ : Permutation n -> Vect n a -> Vect n a
+σ = sigma
+
+π : Fin n -> Fin n -> Permutation n
+π = pi
