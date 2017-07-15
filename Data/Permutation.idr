@@ -27,6 +27,7 @@ data Permutation : Nat -> Type where
 interface Group (t : Type) where
   identity : t
   multiply : t -> t -> t
+  inverse : t -> t
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
 ||| We do not require that the vector's elements come from a set of size n.
@@ -79,15 +80,20 @@ pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = id
 
-partial
+-- FIXME this is dumb.
 compose : Permutation n -> Permutation n -> Permutation n
 compose x Nil = x
 compose Nil y = y
-compose _ y = y
+compose x y = ?f x y
+
+-- | FIXME this is dumb.
+invert : Permutation n -> Permutation n
+invert x = ?f x
 
 implementation Group (Permutation n) where
   identity = id
   multiply = compose
+  inverse = invert
 
 σ : Permutation n -> Vect n a -> Vect n a
 σ = sigma

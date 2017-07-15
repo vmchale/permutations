@@ -2,3 +2,5 @@
   - [ ] also `bounded` for things w/ bounded size?
 - [ ] `Group` interface would be nice as well
 - [ ] separate package for the proofs
+- [ ] display in cycle notation, e.g. (12)(345)
+
