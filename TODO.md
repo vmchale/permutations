@@ -1,0 +1,4 @@
+- [ ] `Indexable` interface
+  - [ ] also `bounded` for things w/ bounded size?
+- [ ] `Group` interface would be nice as well
+- [ ] separate package for the proofs
