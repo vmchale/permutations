@@ -60,6 +60,11 @@ reverse : Permutation n
 reverse {n=Z} = []
 reverse {n=S _} = last :: reverse
 
+-- e.g. (1234) for S_4
+cycle : Permutation n
+cycle {n=Z} = []
+cycle {n=S _} = ?s
+
 getSize : Permutation n -> Nat
 getSize Nil = Z
 getSize (x::xs) = S (getSize xs)
@@ -88,6 +93,7 @@ compose x y = ?f x y
 
 -- | FIXME this is dumb.
 invert : Permutation n -> Permutation n
+invert Nil = Nil
 invert x = ?f x
 
 implementation Group (Permutation n) where
