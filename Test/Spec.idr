@@ -9,7 +9,7 @@ export
 specSuite : IO ()
 specSuite = printLn $ trivial
   where trivial : Permutation 4
-        trivial = pi FZ FZ --(FS 1)
+        trivial = pi (FS 0) (FS 2) --FZ FZ --(FS 1)
 
 {--
 specSuite : IO ()
