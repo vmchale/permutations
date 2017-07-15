@@ -10,7 +10,7 @@ something Idris can do that Haskell cannot.
 ## Installation
 
 ```
-idris --install permutations.ipkg
+idris --install permutation.ipkg
 ```
 
 ## Examples
