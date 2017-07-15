@@ -6,7 +6,9 @@ module Data.Permutations
 
 import Data.Vect
 
-%access export
+%default total
+
+%access public export
 
 -- IDEALLY, at the type level, we would also like to enforce the distinction that the vector
 -- has all distinct elements. 
@@ -18,6 +20,11 @@ data Permutation : Nat -> Type where
   Nil : Permutation Z
   (::) : Fin (S n) -> Permutation n -> Permutation (S n)
 
+interface Group (t : Type) where
+  identity : t
+  multiply : t -> t -> t
+
+||| This is essentially a group action. Given a permutation, we apply it to the vector.
 sigma : Permutation n -> Vect n a -> Vect n a
 sigma [] [] = []
 sigma (p::ps) (x::xs) = insert (sigma ps xs) p
@@ -51,21 +58,35 @@ getSize : Permutation n -> Nat
 getSize Nil = Z
 getSize (x::xs) = S (getSize xs)
 
+private
 fill : Fin n -> Permutation n
 fill FZ = id
 fill (FS k) = FS (zeros k) :: fill k
-  where zeros : Fin m -> Fin m -- TODO figure out why this is finnicky.
+  where zeros : Fin m -> Fin m
         zeros FZ = FZ
         zeros (FS _) = FZ
 
+-- function to decompose a permutation into its contitutent parts? i.e. cycles/etc.
+export
 pi : Fin n -> Fin n -> Permutation n
 pi (FS j) (FS k) = FZ :: pi j k
 pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = id
 
+partial
+compose : Permutation n -> Permutation n -> Permutation n
+compose x Nil = x
+compose Nil y = y
+compose _ y = y
+
+implementation Group (Permutation n) where
+  identity = id
+  multiply = compose
+
 σ : Permutation n -> Vect n a -> Vect n a
 σ = sigma
 
+export
 π : Fin n -> Fin n -> Permutation n
 π = pi
