@@ -47,7 +47,7 @@ toVector {n} p = sigma p (count n)
 
 implementation Show (Fin n) where
   show FZ = "0"
-  show (FS k) = "S (" ++ show k ++ ")" -- FIXME this is broken
+  show (FS k) = show $ (finToNat k) + 1
 
 implementation Show (Permutation n) where
   show p = show (toVector p)
@@ -69,6 +69,20 @@ getSize : Permutation n -> Nat
 getSize Nil = Z
 getSize (x::xs) = S (getSize xs)
 
+mangleTypes2 : Permutation 2 -> Type -> Type -> (Type, Type)
+mangleTypes2 (FZ :: (FZ :: Nil)) t1 t2 = (t1, t2)
+mangleTypes2 ((FS FZ) :: (FZ :: Nil)) t1 t2 = (t2, t1)
+
+-- | We should make this 
+mangle2 : (p: Permutation 2) -> (a -> b -> c) -> (fst (mangleTypes2 p a b) -> snd (mangleTypes2 p a b) -> c)
+mangle2 (FZ :: (FZ :: Nil)) f = \x, y => f x y
+mangle2 ((FS FZ) :: (FZ :: Nil)) f = \x, y => f y x
+
+-- if σ=(143)(27689) then σ=(13)(14)(29)(28)(26)(27)
+-- ideally, we should have a proof that the resulting list contains only transpositions as well.
+decompose : Permutation n -> List (Permutation n)
+decompose p = pure p
+
 private
 fill : Fin n -> Permutation n
 fill FZ = id
@@ -76,6 +90,9 @@ fill (FS k) = FS (zeros k) :: fill k
   where zeros : Fin m -> Fin m
         zeros FZ = FZ
         zeros (FS _) = FZ
+
+-- injections? ↪ : Permutation m -> Permutation n but w/ constraints?
+-- also proving something is a homo. ALSO apparently all injections are catamorphisms??
 
 -- function to decompose a permutation into its contitutent parts? i.e. cycles/etc.
 export
@@ -85,13 +102,13 @@ pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = id
 
--- FIXME this is dumb.
+||| FIXME this is dumb.
 compose : Permutation n -> Permutation n -> Permutation n
 compose x Nil = x
 compose Nil y = y
 compose x y = ?f x y
 
--- | FIXME this is dumb.
+||| FIXME don't use this.
 invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert x = ?f x
@@ -101,9 +118,12 @@ implementation Group (Permutation n) where
   multiply = compose
   inverse = invert
 
+||| Synonym for 'sigma'
+export
 σ : Permutation n -> Vect n a -> Vect n a
 σ = sigma
 
+||| Synonym for 'pi'
 export
 π : Fin n -> Fin n -> Permutation n
 π = pi
