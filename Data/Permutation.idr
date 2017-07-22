@@ -30,16 +30,16 @@ interface (Monoid t) => Group (t : Type) where
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
 ||| We do not require that the vector's elements come from a set of size n.
-σ : Permutation n -> Vect n a -> Vect n a
-σ [] [] = []
-σ (p::ps) (x::xs) = insert (σ ps xs) p
+sigma : Permutation n -> Vect n a -> Vect n a
+sigma [] [] = []
+sigma (p::ps) (x::xs) = insert (sigma ps xs) p
   where insert : Vect n a -> Fin (S n) -> Vect (S n) a
         insert l FZ = x::l
         insert [] (FS i) = [x]
         insert (e::es) (FS k) = e :: insert es k
 
 toVector : Permutation n -> Vect n (Fin n)
-toVector {n} p = σ p (count n)
+toVector {n} p = sigma p (count n)
   where count : (n : Nat) -> Vect n (Fin n)
         count Z = []
         count (S k) = FZ :: map FS (count k)
@@ -70,7 +70,7 @@ cycle : Permutation n
 cycle {n=Z} = []
 cycle {n=S _} = ?s
 
--- if σ=(143)(27689) then σ=(13)(14)(29)(28)(26)(27)
+-- if sigma=(143)(27689) then sigma=(13)(14)(29)(28)(26)(27)
 -- ideally, we should have a proof that the resulting list contains only transpositions as well.
 decompose : Permutation n -> List (Permutation n)
 decompose p = pure p
@@ -99,11 +99,11 @@ injects {m} {n} _ _ = m < n
 
 ||| 
 export
-π : Fin n -> Fin n -> Permutation n
-π (FS j) (FS k) = FZ :: π j k
-π (FS j) FZ = FS j :: fill j
-π FZ (FS k) = FS k :: fill k
-π FZ FZ = id
+pi : Fin n -> Fin n -> Permutation n
+pi (FS j) (FS k) = FZ :: pi j k
+pi (FS j) FZ = FS j :: fill j
+pi FZ (FS k) = FS k :: fill k
+pi FZ FZ = id
 
 ||| FIXME this is dumb.
 compose : Permutation n -> Permutation n -> Permutation n

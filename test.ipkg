@@ -1,4 +1,4 @@
-package permutations
+package test
 
 sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
