@@ -6,6 +6,8 @@ bugtracker = http://www.github.com/vmchale/permutations/issues
 pkgs = specdris
 
 modules = Data.Permutation
+        , Data.Arity
+        , Data.Sized
         , Test.Spec
 
 tests = Test.Spec.specSuite

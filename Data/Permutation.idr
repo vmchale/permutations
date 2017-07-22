@@ -5,6 +5,7 @@
 module Data.Permutation
 
 import Data.Vect
+import Data.Sized
 
 %default total
 
@@ -24,9 +25,7 @@ data Permutation : Nat -> Type where
   Nil : Permutation Z
   (::) : Fin (S n) -> Permutation n -> Permutation (S n)
 
-interface Group (t : Type) where
-  identity : t
-  multiply : t -> t -> t
+interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
@@ -52,6 +51,10 @@ implementation Show (Fin n) where
 implementation Show (Permutation n) where
   show p = show (toVector p)
 
+implementation Sized (Permutation n) where
+  size Nil = Z
+  size (x::xs) = S (size xs)
+
 -- Also nice: take a string, return a permutation! Or also "fromVector" would be v useful.
 
 id : Permutation n
@@ -67,19 +70,6 @@ cycle : Permutation n
 cycle {n=Z} = []
 cycle {n=S _} = ?s
 
-getSize : Permutation n -> Nat
-getSize Nil = Z
-getSize (x::xs) = S (getSize xs)
-
-mangleTypes2 : Permutation 2 -> Type -> Type -> Vect 2 Type
-mangleTypes2 (FZ :: (FZ :: Nil)) t1 t2 = [t1, t2]
-mangleTypes2 ((FS FZ) :: (FZ :: Nil)) t1 t2 = [t2, t1]
-
--- | Type-safe manipulation of any number of arguments
-mangle2 : (p: Permutation 2) -> (a -> b -> c) -> (index 0 (mangleTypes2 p a b) -> index 1 (mangleTypes2 p a b) -> c)
-mangle2 (FZ :: (FZ :: Nil)) f = \x, y => f x y
-mangle2 ((FS FZ) :: (FZ :: Nil)) f = \x, y => f y x
-
 -- if σ=(143)(27689) then σ=(13)(14)(29)(28)(26)(27)
 -- ideally, we should have a proof that the resulting list contains only transpositions as well.
 decompose : Permutation n -> List (Permutation n)
@@ -93,10 +83,21 @@ fill (FS k) = FS (zeros k) :: fill k
         zeros FZ = FZ
         zeros (FS _) = FZ
 
+partial
+head : (xs : List a) -> {auto p : isCons xs = True} -> a
+head (x :: xs) = x
 -- injections? ↪ : Permutation m -> Permutation n but w/ constraints?
 -- also proving something is a homo. ALSO apparently all injections are catamorphisms??
 
--- function to decompose a permutation into its contitutent parts? i.e. cycles/etc.
+private
+injects : Permutation m -> Permutation n -> Bool
+injects {m} {n} _ _ = m < n
+
+||| Inject ↪
+--injection : (p1 : Permutation m) -> { auto p : injects p1 p2 = True } -> (p2 : Permutation n)
+--injection p = fill (size p)
+
+||| 
 export
 π : Fin n -> Fin n -> Permutation n
 π (FS j) (FS k) = FZ :: π j k
@@ -115,7 +116,11 @@ invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert x = ?f x
 
+implementation Semigroup (Permutation n) where
+  (<+>) = compose
+
+implementation Monoid (Permutation n) where
+  neutral = id
+
 implementation Group (Permutation n) where
-  identity = id
-  multiply = compose
   inverse = invert
