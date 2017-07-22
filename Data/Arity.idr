@@ -23,3 +23,8 @@ fuckInputs f x y z = f z y x
 
 fuckInputsHard : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d
 fuckInputsHard (FZ::FZ::FZ::Nil) f x y z = f x y z
+fuckInputsHard ((FS (FS FZ))::(FS FZ)::FZ::Nil) f x y z = f z y x
+fuckInputsHard ((FS FZ)::(FS FZ)::FZ::Nil) f x y z = f y z x
+fuckInputsHard ((FS FZ)::FZ::FZ::Nil) f x y z = f y x z
+fuckInputsHard (FZ::(FS FZ)::FZ::Nil) f x y z = f x z y
+fuckInputsHard ((FS (FS FZ))::FZ::FZ::Nil) f x y z = f z x y
