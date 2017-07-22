@@ -18,13 +18,10 @@ arityVect (t::ts) b = t -> (arityVect ts b)
 f : arityVect [Int, Int, Int] Bool 
 f m n p = m + n == p
 
-fuckInputs : arityVect [a, b, c] d -> arityVect (reverse [a, b, c]) d
-fuckInputs f x y z = f z y x
-
-fuckInputsHard : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d
-fuckInputsHard (FZ::FZ::FZ::Nil) f x y z = f x y z
-fuckInputsHard ((FS (FS FZ))::(FS FZ)::FZ::Nil) f x y z = f z y x
-fuckInputsHard ((FS FZ)::(FS FZ)::FZ::Nil) f x y z = f y z x
-fuckInputsHard ((FS FZ)::FZ::FZ::Nil) f x y z = f y x z
-fuckInputsHard (FZ::(FS FZ)::FZ::Nil) f x y z = f x z y
-fuckInputsHard ((FS (FS FZ))::FZ::FZ::Nil) f x y z = f z x y
+fuckInputs : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (σ p [a, b, c]) d
+fuckInputs (FZ::FZ::FZ::Nil) f x y z = f x y z -- id
+fuckInputs ((FS (FS FZ))::(FS FZ)::FZ::Nil) f x y z = f z y x -- (132)
+fuckInputs ((FS FZ)::(FS FZ)::FZ::Nil) f x y z = f y z x -- (123)
+fuckInputs ((FS FZ)::FZ::FZ::Nil) f x y z = f y x z -- (12)
+fuckInputs (FZ::(FS FZ)::FZ::Nil) f x y z = f x z y -- (13)
+fuckInputs ((FS (FS FZ))::FZ::FZ::Nil) f x y z = f z x y -- (312)

@@ -3,4 +3,4 @@
 - [ ] `Group` interface would be nice as well
 - [ ] separate package for the proofs
 - [ ] display in cycle notation, e.g. (12)(345)
-
+- [ ] parse cycle notation e.g. (12)(345), might require lightyear?
