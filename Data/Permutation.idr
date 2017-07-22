@@ -1,8 +1,8 @@
--- -------------------------------------------------------- [ Permutations.idr ]
--- Module      : Data.Permutations
+-- --------------------------------------------------------- [ Permutation.idr ]
+-- Module      : Data.Permutation
 -- Description : 
 -- --------------------------------------------------------------------- [ EOH ]
-module Data.Permutations
+module Data.Permutation
 
 import Data.Vect
 
@@ -52,6 +52,8 @@ implementation Show (Fin n) where
 implementation Show (Permutation n) where
   show p = show (toVector p)
 
+-- Also nice: take a string, return a permutation! Or also "fromVector" would be v useful.
+
 id : Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :: id
@@ -69,12 +71,12 @@ getSize : Permutation n -> Nat
 getSize Nil = Z
 getSize (x::xs) = S (getSize xs)
 
-mangleTypes2 : Permutation 2 -> Type -> Type -> (Type, Type)
-mangleTypes2 (FZ :: (FZ :: Nil)) t1 t2 = (t1, t2)
-mangleTypes2 ((FS FZ) :: (FZ :: Nil)) t1 t2 = (t2, t1)
+mangleTypes2 : Permutation 2 -> Type -> Type -> Vect 2 Type
+mangleTypes2 (FZ :: (FZ :: Nil)) t1 t2 = [t1, t2]
+mangleTypes2 ((FS FZ) :: (FZ :: Nil)) t1 t2 = [t2, t1]
 
--- | We should make this 
-mangle2 : (p: Permutation 2) -> (a -> b -> c) -> (fst (mangleTypes2 p a b) -> snd (mangleTypes2 p a b) -> c)
+-- | Type-safe manipulation of any number of arguments
+mangle2 : (p: Permutation 2) -> (a -> b -> c) -> (index 0 (mangleTypes2 p a b) -> index 1 (mangleTypes2 p a b) -> c)
 mangle2 (FZ :: (FZ :: Nil)) f = \x, y => f x y
 mangle2 ((FS FZ) :: (FZ :: Nil)) f = \x, y => f y x
 

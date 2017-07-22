@@ -3,4 +3,5 @@ package permutations
 sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
-modules = Data.Permutation
+modules = Data.Permutation,
+          Data.Arity
