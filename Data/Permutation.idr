@@ -5,7 +5,6 @@
 module Data.Permutation
 
 import Data.Vect
-import Data.Sized
 
 %default total
 
@@ -15,18 +14,18 @@ private
 (>>) : (Monad m) => m a -> m b -> m b
 (>>) a a' = a >>= (const a')
 
--- IDEALLY, at the type level, we would also like to enforce the distinction that the vector
--- has all distinct elements. 
--- 
--- Failing that, a proof of some aspects would be good.
-
 ||| This is something like `Vector k a`, except we restrict ourselves to only 1,...,n for `Permutation n`.
 data Permutation : Nat -> Type where
   Nil : Permutation Z
   (::) : Fin (S n) -> Permutation n -> Permutation (S n)
 
+||| This extends 'Monoid' by defining an inverse for every element.
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
+
+-- FIXME
+interface (Sized t) => Action t where
+  act  : t -> Permutation n -> t
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
 ||| We do not require that the vector's elements come from a set of size n.
@@ -68,7 +67,7 @@ reverse {n=S _} = last :: reverse
 -- e.g. (1234) for S_4
 cycle : Permutation n
 cycle {n=Z} = []
-cycle {n=S _} = ?s
+cycle {n=S _} = FZ :: cycle
 
 -- if sigma=(143)(27689) then sigma=(13)(14)(29)(28)(26)(27)
 -- ideally, we should have a proof that the resulting list contains only transpositions as well.
@@ -83,11 +82,7 @@ fill (FS k) = FS (zeros k) :: fill k
         zeros FZ = FZ
         zeros (FS _) = FZ
 
-partial
-head : (xs : List a) -> {auto p : isCons xs = True} -> a
-head (x :: xs) = x
--- injections? ↪ : Permutation m -> Permutation n but w/ constraints?
--- also proving something is a homo. ALSO apparently all injections are catamorphisms??
+-- also proving something is a homo. ALSO apparently all injections are catamorphisms, but I don't think that's useful here
 
 private
 injects : Permutation m -> Permutation n -> Bool
@@ -97,7 +92,7 @@ injects {m} {n} _ _ = m < n
 --injection : (p1 : Permutation m) -> { auto p : injects p1 p2 = True } -> (p2 : Permutation n)
 --injection p = fill (size p)
 
-||| 
+||| The permutation π_ij
 export
 pi : Fin n -> Fin n -> Permutation n
 pi (FS j) (FS k) = FZ :: pi j k
