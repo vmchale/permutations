@@ -1,7 +1,7 @@
 module Test.Spec
 
 import Specdris.Spec
-import Data.Permutation
+import Control.Permutation
 import Data.Vect
 
 export

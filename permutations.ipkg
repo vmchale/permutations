@@ -3,10 +3,5 @@ package permutations
 sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
-pkgs = specdris
-
-modules = Control.Permutation
-        , Control.Permutation.Arity
-        , Test.Spec
-
-tests = Test.Spec.specSuite
+modules = Control.Permutation,
+          Control.Permutation.Arity

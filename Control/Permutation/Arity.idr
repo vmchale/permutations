@@ -1,11 +1,7 @@
--- --------------------------------------------------------------- [ Arity.idr ]
--- Module      : Data.Arity
--- Description : 
--- --------------------------------------------------------------------- [ EOH ]
-module Data.Arity
+module Control.Permutation.Arity
 
 import Data.Vect
-import Data.Permutation
+import Control.Permutation
 
 %default total
 

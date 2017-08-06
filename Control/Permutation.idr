@@ -1,8 +1,4 @@
--- --------------------------------------------------------- [ Permutation.idr ]
--- Module      : Data.Permutation
--- Description : 
--- --------------------------------------------------------------------- [ EOH ]
-module Data.Permutation
+module Control.Permutation
 
 import Data.Vect
 
