@@ -20,6 +20,9 @@ f m n p = m + n == p
 (.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e
 (.**) f g = \x, y, z => f (g x y z)
 
+prf : (Int -> Int -> Int -> Bool) = arityVect (sigma (pi 1 2) [Int, Int, Int]) Bool
+prf = ?hole
+
 fuckInputs : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d
 fuckInputs (FZ::FZ::FZ::Nil) f x y z = f x y z -- id
 fuckInputs ((FS (FS FZ))::(FS FZ)::FZ::Nil) f x y z = f z y x -- (132)
@@ -28,8 +31,8 @@ fuckInputs ((FS FZ)::FZ::FZ::Nil) f x y z = f y x z -- (12)
 fuckInputs (FZ::(FS FZ)::FZ::Nil) f x y z = f x z y -- (13)
 fuckInputs ((FS (FS FZ))::FZ::FZ::Nil) f x y z = f z x y -- (312)
 
-h : arityVect [Int, Int] Int = (Int ->Int -> Int)
-h = ?hole
+g : Int -> Int -> Int -> Bool
+g = rewrite prf in fuckInputs (pi 1 2) f
 
 --fuckInputsHard : (p : Permutation 3) -> (h : d -> e) -> (f : arityVect [a, b, c] d) -> arityVect (sigma p [a, b, c]) e
 --fuckInputsHard p h f = h .** (fuckInputs p f) 
