@@ -20,7 +20,7 @@ f m n p = m + n == p
 (.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e
 (.**) f g = \x, y, z => f (g x y z)
 
-prf : (Int -> Int -> Int -> Bool) = arityVect (sigma (pi 1 2) [Int, Int, Int]) Bool
+prf : (Int -> Int -> Int -> Bool) = { p : _ } arityVect (sigma p [Int, Int, Int]) Bool
 prf = ?hole
 
 fuckInputs : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d
