@@ -19,6 +19,9 @@ data Permutation : Nat -> Type where
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
+interface Sized (t : Type) where
+  size : t -> Nat
+
 -- FIXME
 interface (Sized t) => Action t where
   act  : t -> Permutation n -> t
