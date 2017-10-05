@@ -20,12 +20,13 @@ f m n p = m + n == p
 (.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e
 (.**) f g = \x, y, z => f (g x y z)
 
--- TODO make this work for *all* homogeneous vectors?
-lemma : (p : Permutation 3) -> arityVect [a, a, a] b = arityVect (sigma p [a, a, a]) b
-lemma = ?another_hole
-
 prf : (p : Permutation 3) -> (Int -> Int -> Int -> Bool) = arityVect (sigma p [Int, Int, Int]) Bool
-prf = ?hole
+prf (FZ::FZ::FZ::Nil) = Refl
+prf ((FS (FS FZ))::(FS FZ)::FZ::Nil) = Refl
+prf ((FS FZ)::(FS FZ)::FZ::Nil) = Refl
+prf ((FS FZ)::FZ::FZ::Nil) = Refl
+prf (FZ::(FS FZ)::FZ::Nil) = Refl
+prf ((FS (FS FZ))::FZ::FZ::Nil) = Refl
 
 fuckInputs : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d
 fuckInputs (FZ::FZ::FZ::Nil) f x y z = f x y z -- id

@@ -10,6 +10,8 @@ private
 (>>) : (Monad m) => m a -> m b -> m b
 (>>) a a' = a >>= (const a')
 
+-- FIXME consider using *two* constructors and forcing them to use `n` as an argument?
+
 ||| This is something like `Vector k a`, except we restrict ourselves to only 1,...,n for `Permutation n`.
 data Permutation : Nat -> Type where
   Nil : Permutation Z
@@ -118,3 +120,5 @@ implementation Monoid (Permutation n) where
 
 implementation Group (Permutation n) where
   inverse = invert
+
+-- TODO Permutations are a type of lens!! And should be viewed as such.
