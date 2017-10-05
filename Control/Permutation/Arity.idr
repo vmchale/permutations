@@ -20,6 +20,9 @@ f m n p = m + n == p
 (.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e
 (.**) f g = \x, y, z => f (g x y z)
 
+prfN : (p : Permutation n) -> arityVect (replicate n a) Bool = arityVect (sigma p (replicate n a)) Bool
+prfN = ?holey_hole
+
 prf : (p : Permutation 3) -> (Int -> Int -> Int -> Bool) = arityVect (sigma p [Int, Int, Int]) Bool
 prf (FZ::FZ::FZ::Nil) = Refl
 prf ((FS (FS FZ))::(FS FZ)::FZ::Nil) = Refl
@@ -39,8 +42,8 @@ fuckInputs ((FS (FS FZ))::FZ::FZ::Nil) f x y z = f z x y -- (312)
 g : Int -> Int -> Int -> Bool
 g = rewrite prf (pi 1 2) in fuckInputs (pi 1 2) f
 
---fuckInputsHard : (p : Permutation 3) -> (h : d -> e) -> (f : arityVect [a, b, c] d) -> arityVect (sigma p [a, b, c]) e
---fuckInputsHard p h f = h .** (fuckInputs p f) 
+-- fuckInputsHard : (p : Permutation 3) -> (h : d -> e) -> (f : arityVect [a, b, c] d) -> arityVect (sigma p [a, b, c]) e
+-- fuckInputsHard p h f = h .** (fuckInputs p f) 
 
 natInduction : (P : Nat -> Type) ->             -- Property to show
                (P Z) ->                         -- Base case
