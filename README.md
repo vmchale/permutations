@@ -13,4 +13,9 @@ something Idris can do that Haskell cannot where it does work.
 idris --install permutation.ipkg
 ```
 
-## Examples
+## User
+
+### Documentation
+
+You can find documentation
+[here](https://vmchale.github.io/permutations/index.html).
