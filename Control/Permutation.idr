@@ -1,6 +1,7 @@
 module Control.Permutation
 
 import Data.Vect
+import Control.Lens.At
 
 %default total
 
@@ -21,11 +22,8 @@ data Permutation : Nat -> Type where
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
-interface Sized (t : Type) where
-  size : t -> Nat
-
 -- FIXME
-interface (Sized t) => Action t where
+interface (Ixed t) => Action t where
   act  : t -> Permutation n -> t
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
@@ -50,10 +48,6 @@ implementation Show (Fin n) where
 
 implementation Show (Permutation n) where
   show p = show (toVector p)
-
-implementation Sized (Permutation n) where
-  size Nil = Z
-  size (x::xs) = S (size xs)
 
 -- Also nice: take a string, return a permutation! Or also "fromVector" would be v useful.
 

@@ -4,6 +4,7 @@ sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
 pkgs = specdris
+     , lens
 
 modules = Control.Permutation
         , Control.Permutation.Arity
