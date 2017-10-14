@@ -5,7 +5,7 @@ builds on Alyssa Carter's code
 [here](https://github.com/trillioneyes/idris-toys/blob/master/Permutation.idr). 
 
 It's currently very much a work in progress, but it is a nice example of
-something Idris can do that Haskell cannot where it does work.
+something Idris can do that Haskell cannot.
 
 ## Installation
 
@@ -18,4 +18,4 @@ idris --install permutation.ipkg
 ### Documentation
 
 You can find documentation
-[here](https://vmchale.github.io/permutations/index.html).
+[here](https://vmchale.github.io/permutation/index.html).
