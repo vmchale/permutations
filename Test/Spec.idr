@@ -7,11 +7,10 @@ import Data.Vect
 
 export
 specSuite : IO ()
-specSuite = do 
-    printLn trivial
-    printLn arguments
+specSuite =
+  spec $ do
+    describe "trivial" $
+      it "should permute a vector" $
+        toVector trivial `shouldBe` [0, 3, 2, 1]
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
-
-        arguments : Bool
-        arguments = g 3 1 4
