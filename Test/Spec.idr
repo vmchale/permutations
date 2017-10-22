@@ -22,5 +22,8 @@ specSuite =
     describe "cycles" $ do
       it "should be able to find cycles" $ do
         cycles trivial `shouldBe` Just [[0], [1, 3], [2]]
+    describe "swaps" $ do
+      it "should be able to factor a permutation as swaps" $ do
+        swaps trivial `shouldBe` Just [(1, 3)]
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)

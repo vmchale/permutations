@@ -59,6 +59,18 @@ finOrbit p {n} i = nub $ take n (orbit p i)
 cycles : Permutation (S n) -> Maybe (List (List (Fin (S n))))
 cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 <$> (natToFin n (S n))
 
+private
+getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> Maybe (List (Fin (S n), Fin (S n)))
+getSwapsHelp f p = (>>= f) <$> cycles p
+
+export
+swaps : Permutation (S n) -> Maybe (List (Fin (S n), Fin (S n)))
+swaps = getSwapsHelp overlappingPairs
+  where
+    overlappingPairs [] = []
+    overlappingPairs [x] = []
+    overlappingPairs (x::xs@(y::_))= (x, y) :: overlappingPairs xs
+
 implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
