@@ -65,16 +65,18 @@ orbit p {n} i = i :: go i where
 finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
 finOrbit p {n} i = nub $ take n (orbit p i)
 
+private
 natToFin' : (n : Nat) -> Fin (S n)
 natToFin' Z = FZ
 natToFin' (S k) = FS k' where k' = natToFin' k
 
 ||| Return a list of disjoint cycles given a permutation
-cycles : Permutation (S n) -> (List (List (Fin (S n))))
+export
+cycles : Permutation (S n) -> List (List (Fin (S n)))
 cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin' n)
 
 private
-getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> (List (Fin (S n), Fin (S n)))
+getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
 getSwapsHelp f p = (>>= f) $ cycles p
 
 ||| Decompose a permutation into a product of swaps.
