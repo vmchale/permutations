@@ -56,8 +56,8 @@ orbit p {n} i = i :: go i where
 finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
 finOrbit p {n} i = nub $ take n (orbit p i)
 
-cycles : Permutation (S (S n)) -> Maybe (List (List (Fin (S (S n)))))
-cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 1 <$> (natToFin n (S (S n)))
+cycles : Permutation (S n) -> Maybe (List (List (Fin (S n))))
+cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 <$> (natToFin n (S n))
 
 implementation Show (Fin n) where
   show FZ = "0"

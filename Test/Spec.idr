@@ -21,6 +21,6 @@ specSuite =
         finOrbit trivial 1 `shouldBe` [1, 3]
     describe "cycles" $ do
       it "should be able to find cycles" $ do
-        cycles trivial `shouldBe` Just [[1, 3], [2]]
+        cycles trivial `shouldBe` Just [[0], [1, 3], [2]]
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
