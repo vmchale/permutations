@@ -1,5 +1,6 @@
 module Control.Permutation
 
+import Data.List
 import Data.Vect
 import Control.Lens.At
 
@@ -41,6 +42,22 @@ toVector {n} p = sigma p (count n)
   where count : (n : Nat) -> Vect n (Fin n)
         count Z = []
         count (S k) = FZ :: map FS (count k)
+
+getElem : Permutation n -> Fin n -> Fin n
+getElem p n = index n $ toVector p
+
+orbit : Permutation (S n) -> Fin (S n) -> Stream (Fin (S n))
+orbit p {n} i = i :: go i where
+  go : Fin (S n) -> Stream (Fin (S n))
+  go j = next :: go next where
+    next : Fin (S n)
+    next = getElem p j
+
+finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
+finOrbit p {n} i = nub $ take n (orbit p i)
+
+cycles : Permutation (S (S n)) -> Maybe (List (List (Fin (S (S n)))))
+cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 1 <$> (natToFin n (S (S n)))
 
 implementation Show (Fin n) where
   show FZ = "0"
@@ -84,7 +101,7 @@ injects : Permutation m -> Permutation n -> Bool
 injects {m} {n} _ _ = m < n
 
 ||| Inject ↪
---injection : (p1 : Permutation m) -> { auto p : injects p1 p2 = True } -> (p2 : Permutation n)
+--injection : (p1 : Permutation m) -> { auto p : injects p1 p2 = True }Y> -> (p2 : Permutation n)
 --injection p = fill (size p)
 
 ||| The permutation π_ij
@@ -101,7 +118,7 @@ compose x Nil = x
 compose Nil y = y
 compose x y = ?f x y
 
-||| FIXME don't use this.
+-- TODO: apply a permutation to a vector, then use that to find an inverse?
 invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert x = ?f x

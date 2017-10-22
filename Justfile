@@ -1,3 +1,9 @@
+build:
+    @idris --build permutations.ipkg
+
+test:
+    @idris --testpkg test.ipkg
+
 update-docs:
     sn c .
     rm -rf docs

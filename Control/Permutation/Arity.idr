@@ -7,7 +7,7 @@ import Control.Permutation
 
 %access public export
 
-infixr 9 .**
+-- infixr 9 .**
 
 -- function to apply a (sigma pi 2 1 arityVect)??
 arityVect : (Vect n Type) -> (b : Type) -> Type
@@ -17,8 +17,8 @@ arityVect (t::ts) b = t -> (arityVect ts b)
 f : arityVect [Int, Int, Int] Bool 
 f m n p = m + n == p
 
-(.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e
-(.**) f g = \x, y, z => f (g x y z)
+{- (.**) : (d -> e) -> arityVect [a, b, c] d -> arityVect [a, b, c] e -}
+{- (.**) f g = \x, y, z => f (g x y z) -}
 
 prfN : (p : Permutation n) -> arityVect (replicate n a) Bool = arityVect (sigma p (replicate n a)) Bool
 prfN = ?holey_hole
