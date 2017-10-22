@@ -12,8 +12,6 @@ private
 (>>) : (Monad m) => m a -> m b -> m b
 (>>) a a' = a >>= (const a')
 
--- FIXME consider using *two* constructors and forcing them to use `n` as an argument?
-
 ||| This is something like `Vector k a`, except we restrict ourselves to only 1,...,n for `Permutation n`.
 data Permutation : Nat -> Type where
   Nil : Permutation Z
@@ -62,6 +60,11 @@ orbit p {n} i = i :: go i where
     next : Fin (S n)
     next = getElem p j
 
+-- divides : (n : Nat) -> (m : Fin (S n)) -> Bool
+-- divides n FZ = False
+-- divides n (FS m) = mod n (finToNat (FS m)) == 0
+
+||| Return an orbit.
 finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
 finOrbit p {n} i = nub $ take n (orbit p i)
 
