@@ -1,3 +1,9 @@
+install:
+    git clone https://github.com/HuwCampbell/idris-lens
+    cd idris-lens && idris --install lens.ipkg
+    rm -rf idris-lens
+    idris --install permutations.ipkg
+
 build:
     @idris --build permutations.ipkg
 

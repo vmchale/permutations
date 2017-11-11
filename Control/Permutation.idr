@@ -2,7 +2,7 @@ module Control.Permutation
 
 import Data.List
 import Data.Vect
-import Control.Lens.At
+-- import Control.Lens.At
 
 %default total
 
@@ -22,8 +22,8 @@ interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
 -- FIXME
-interface (Ixed t) => Action t where
-  act  : t -> Permutation n -> t
+{-interface (Ixed t) => Action t where
+  act  : t -> Permutation n -> t-}
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
 ||| We do not require that the vector's elements come from a set of size n.
@@ -90,6 +90,18 @@ decompose = getSwapsHelp overlappingPairs
     overlappingPairs [] = []
     overlappingPairs [x] = []
     overlappingPairs (x::xs@(y::_))= (x, y) :: overlappingPairs xs
+
+even : Nat -> Bool
+even Z = True
+even (S k) = odd k
+  where
+    odd : Nat -> Bool
+    odd Z = False
+    odd (S k) = even k
+
+export
+isEven : Permutation (S n) -> Bool
+isEven = even . length . decompose
 
 implementation Show (Fin n) where
   show FZ = "0"
