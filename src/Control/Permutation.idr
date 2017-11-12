@@ -109,11 +109,6 @@ implementation Show (Fin n) where
   show (FS k) = show $ (finToNat k) + 1
 
 implementation Show (Permutation (S n)) where
-  {-show {n=S (S ( S ( S( S( S( S( S( S( S _)))))))))} p = concatMap go (cycles p)
-    where
-      go : (Show a) => List a -> String
-      go l@(_::_::_) = "(" ++ concatMap ((++ ",") . show) l ++ ")"
-      go _ = "" FIXME this currently crashes idris compiler -}
     show {n} p = concatMap (go n) (cycles p)
     where
       go : (Show a) => Nat -> List a -> String
@@ -121,8 +116,6 @@ implementation Show (Permutation (S n)) where
         then "(" ++ concatMap show l ++ ")"
         else "(" ++ concatMap ((++ ",") . show) l ++ ")"
       go _ _ = ""
-
--- Also nice: take a string, return a permutation! Or also "fromVector" would be v useful.
 
 id : Permutation n
 id {n=Z} = []
