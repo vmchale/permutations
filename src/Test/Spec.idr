@@ -25,5 +25,8 @@ specSuite =
     describe "decompose" $ do
       it "should be able to factor a permutation as swaps" $ do
         decompose trivial `shouldBe` [(1, 3)]
+    describe "getAll" $ do
+      it "should work give the right number of elements for n=3" $ do
+        length (toVector <$> getAll 3) `shouldBe` 6
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)

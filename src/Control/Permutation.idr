@@ -2,52 +2,62 @@ module Control.Permutation
 
 import Data.List
 import Data.Vect
--- import Control.Lens.At
 
 %default total
 
 %access public export
-
-private
-(>>) : (Monad m) => m a -> m b -> m b
-(>>) a a' = a >>= (const a')
 
 ||| This is something like `Vector k a`, except we restrict ourselves to only 1,...,n for `Permutation n`.
 data Permutation : Nat -> Type where
   Nil : Permutation Z
   (::) : Fin (S n) -> Permutation n -> Permutation (S n)
 
+implementation Eq (Permutation n) where
+  (==) Nil Nil = True
+  (==) (x :: xs) (y :: ys) = x == y && xs == ys
+
 ||| This extends 'Monoid' by defining an inverse for every element.
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
-
--- FIXME
-{-interface (Ixed t) => Action t where
-  act  : t -> Permutation n -> t-}
 
 ||| This is essentially a group action. Given a permutation, we apply it to the vector.
 ||| We do not require that the vector's elements come from a set of size n.
 sigma : Permutation n -> Vect n a -> Vect n a
 sigma [] [] = []
 sigma (p::ps) (x::xs) = insert (sigma ps xs) p
-  where insert : Vect n a -> Fin (S n) -> Vect (S n) a
-        insert l FZ = x::l
-        insert [] (FS i) = [x]
-        insert (e::es) (FS k) = e :: insert es k
+  where
+    -- insert 'x' at the index specified.
+    insert : Vect n a -> Fin (S n) -> Vect (S n) a
+    insert l FZ = x::l
+    insert [] (FS i) = [x]
+    insert (e::es) (FS k) = e :: insert es k
 
 toVector : Permutation n -> Vect n (Fin n)
-toVector {n} p = sigma p (count n)
-  where count : (n : Nat) -> Vect n (Fin n)
-        count Z = []
-        count (S k) = FZ :: map FS (count k)
+toVector {n} p = sigma p (sequential n)
+  where
+    sequential : (n : Nat) -> Vect n (Fin n)
+    sequential Z = []
+    sequential (S k) = FZ :: map FS (sequential k)
 
 factorial : Nat -> Nat
 factorial Z = 1
 factorial (S n) = (S n) * factorial n
 
-||| FIXME don't use this function.
-getAll : (n : Nat) -> Vect (factorial n) (Permutation n)
-getAll = ?holey_hole_again
+private
+natToFin : (n : Nat) -> Fin (S n)
+natToFin Z = FZ
+natToFin (S k) = FS k' where k' = natToFin k
+
+private
+finiteL : (n : Nat) -> Vect n (Fin (S n))
+finiteL Z = Nil
+finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
+
+||| Returns all permutations of a certain order.
+export
+getAll : (n : Nat) -> List (Permutation (S n)) -- Vect (factorial (S n)) (Permutation (S n))
+getAll Z = ((FZ :: Nil) :: Nil)
+getAll n@(S m) = (::) <$> (toList $ finiteL n) <*> (getAll m)
 
 getElem : Permutation n -> Fin n -> Fin n
 getElem p n = index n $ toVector p
@@ -60,23 +70,14 @@ orbit p {n} i = i :: go i where
     next : Fin (S n)
     next = getElem p j
 
--- divides : (n : Nat) -> (m : Fin (S n)) -> Bool
--- divides n FZ = False
--- divides n (FS m) = mod n (finToNat (FS m)) == 0
-
-||| Return an orbit.
+||| Return the orbit of some permutation.
 finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
 finOrbit p {n} i = nub $ take n (orbit p i)
-
-private
-natToFin' : (n : Nat) -> Fin (S n)
-natToFin' Z = FZ
-natToFin' (S k) = FS k' where k' = natToFin' k
 
 ||| Return a list of disjoint cycles given a permutation
 export
 cycles : Permutation (S n) -> List (List (Fin (S n)))
-cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin' n)
+cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
 
 private
 getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
@@ -84,7 +85,7 @@ getSwapsHelp f p = (>>= f) $ cycles p
 
 ||| Decompose a permutation into a product of swaps.
 export
-decompose : Permutation (S n) -> (List (Fin (S n), Fin (S n)))
+decompose : Permutation (S n) -> List (Fin (S n), Fin (S n))
 decompose = getSwapsHelp overlappingPairs
   where
     overlappingPairs [] = []
@@ -137,10 +138,6 @@ private
 injects : Permutation m -> Permutation n -> Bool
 injects {m} {n} _ _ = m < n
 
--- ||| Inject ↪
--- injection : (p1 : Permutation m) -> { auto p : injects p1 p2 = True } -> (p2 : Permutation n)
--- injection p = fill (size p)
-
 ||| The permutation π_ij
 export
 pi : Fin n -> Fin n -> Permutation n
@@ -153,6 +150,8 @@ pi FZ FZ = id
 compose : Permutation n -> Permutation n -> Permutation n
 compose x Nil = x
 compose Nil y = y
+compose (FZ :: xs) (y :: ys) = y :: (compose xs ys)
+compose (x :: xs) (FZ :: ys) = x :: (compose xs ys)
 compose x y = ?f x y
 
 -- TODO: apply a permutation to a vector, then use that to find an inverse?
