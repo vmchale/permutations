@@ -12,14 +12,23 @@ build-idris-package {
 
   src = fetchgit {
     url = "https://github.com/vmchale/permutation";
-    rev = "d69eb44fdd92fcab81a5498536f039c6bdea17f7";
-    sha256 = "bb8f4d1684f8e25ada5d5e5a31121fe741279a170294fb882c994085ddba2fe4";
+    rev = "0d2a84dffaeaa2fbaae280273c4b7347267cdfc7";
+    sha256 = "e726fe72e673fadeb248e4b562e172973eb2046659f37b9e9672847a1c86fd60";
   };
 
   propagatedBuildInputs = [ prelude base ];
 
   buildPhase = ''
     ${idris}/bin/idris --build permutations.ipkg
+  '';
+
+  checkPhase = ''
+    echo 'skipping check...'
+    ''; #      ${idris}/bin/idris --testpkg test.ipkg
+    #'';
+
+  installPhase = ''
+    ${idris}/bin/idris --install permutations.ipkg --ibcsubdir $IBCSUBDIR
   '';
 
   meta = {
