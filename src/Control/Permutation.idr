@@ -49,15 +49,15 @@ natToFin Z = FZ
 natToFin (S k) = FS k' where k' = natToFin k
 
 private
-finiteL : (n : Nat) -> Vect n (Fin (S n))
-finiteL Z = Nil
+finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
+finiteL Z = FZ :: Nil
 finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
 ||| Returns all permutations of a certain order.
 export
-getAll : (n : Nat) -> List (Permutation (S n)) -- Vect (factorial (S n)) (Permutation (S n))
-getAll Z = ((FZ :: Nil) :: Nil)
-getAll n@(S m) = (::) <$> (toList $ finiteL n) <*> (getAll m)
+enumerate : (n : Nat) -> List (Permutation (S n)) -- Vect (factorial (S n)) (Permutation (S n))
+enumerate Z = ((FZ :: Nil) :: Nil)
+enumerate n@(S m) = (::) <$> (toList $ finiteL n) <*> (enumerate m)
 
 getElem : Permutation n -> Fin n -> Fin n
 getElem p n = index n $ toVector p
@@ -104,12 +104,22 @@ export
 isEven : Permutation (S n) -> Bool
 isEven = even . length . decompose
 
+-- FIXME this is stupid and probably slow
+export
+multiplySwaps : (Fin (S n), Fin (S n)) -> (Fin (S n), Fin (S n)) -> List (Permutation n)
+multiplySwaps {n=Z} _ _ = []
+multiplySwaps {n=S m} s s' = map fst $ filter go $ map (\x => (x, decompose x)) (enumerate m)
+  where
+    go : (Permutation (S n), List (Fin (S n), Fin (S n))) -> Bool
+    go (_, ls) = True -- (s `elem` ls) && (s' `elem` ls)
+
 implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
 
 implementation Show (Permutation (S n)) where
-    show {n} p = concatMap (go n) (cycles p)
+  -- show p = show (toVector p)
+  show {n} p = concatMap (go n) (cycles p)
     where
       go : (Show a) => Nat -> List a -> String
       go _ l@(_::_::_) = if n <= 9
