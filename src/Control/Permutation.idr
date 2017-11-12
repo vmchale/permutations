@@ -29,7 +29,7 @@ sigma (p::ps) (x::xs) = insert (sigma ps xs) p
     -- insert 'x' at the index specified.
     insert : Vect n a -> Fin (S n) -> Vect (S n) a
     insert l FZ = x::l
-    insert [] (FS i) = [x]
+    insert [] _ = [x]
     insert (e::es) (FS k) = e :: insert es k
 
 toVector : Permutation n -> Vect n (Fin n)
@@ -108,8 +108,19 @@ implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
 
-implementation Show (Permutation n) where
-  show p = show (toVector p)
+implementation Show (Permutation (S n)) where
+  {-show {n=S (S ( S ( S( S( S( S( S( S( S _)))))))))} p = concatMap go (cycles p)
+    where
+      go : (Show a) => List a -> String
+      go l@(_::_::_) = "(" ++ concatMap ((++ ",") . show) l ++ ")"
+      go _ = "" FIXME this currently crashes idris compiler -}
+    show {n} p = concatMap (go n) (cycles p)
+    where
+      go : (Show a) => Nat -> List a -> String
+      go _ l@(_::_::_) = if n <= 9
+        then "(" ++ concatMap show l ++ ")"
+        else "(" ++ concatMap ((++ ",") . show) l ++ ")"
+      go _ _ = ""
 
 -- Also nice: take a string, return a permutation! Or also "fromVector" would be v useful.
 
