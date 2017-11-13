@@ -28,7 +28,7 @@ enumerate {n=n@(S m)} = (::) <$> (toList $ finiteL m) <*> enumerate
 export
 invert : Permutation n -> Maybe (Permutation n)
 invert Nil = Just Nil
-invert x = head . map snd $ filter ((==id) . fst) ((\y => (x <+> y, y)) <$> enumerate)
+invert x = head' . map snd $ filter ((==id) . fst) ((\y => (x <+> y, y)) <$> enumerate)
 
 {-implementation Group (Permutation n) where
   inverse = invert-}
