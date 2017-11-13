@@ -1,5 +1,8 @@
 # permutations
 
+[![Build Status](https://travis-ci.org/vmchale/permutation.svg?branch=master)](https://travis-ci.org/vmchale/permutation)
+
+This is a library providing recursion schemes for Idris. It it is loosely based
 This is a library providing a type-safe implementation of permutations.
 To my knowledge, It is the only library for type-safe permutations outside of
 Coq.
