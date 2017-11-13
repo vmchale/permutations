@@ -1,6 +1,6 @@
 # permutations
 
-[![Build Status](https://travis-ci.org/vmchale/permutation.svg?branch=master)](https://travis-ci.org/vmchale/permutation)
+[![Build Status](https://travis-ci.org/vmchale/permutations.svg?branch=master)](https://travis-ci.org/vmchale/permutations)
 
 This is a library providing a type-safe implementation of permutations.
 To my knowledge, It is the only such library outside of
@@ -12,7 +12,7 @@ It needs a couple tweaks before it's ready for general use, but everything
 ## Installation
 
 ```bash
- $ idris --install permutation.ipkg
+ $ idris --install permutations.ipkg
 ```
 
 ## Use
@@ -20,4 +20,4 @@ It needs a couple tweaks before it's ready for general use, but everything
 ### Documentation
 
 You can find documentation
-[here](https://vmchale.github.io/permutation/index.html).
+[here](https://vmchale.github.io/permutations/index.html).
