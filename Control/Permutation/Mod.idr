@@ -32,7 +32,7 @@ invert x = head . map snd $ filter ((==id) . fst) ((\y => (x <+> y, y)) <$> enum
   where
     head : List a -> a
     head (x::xs) = x
-    head _ = ?head_hole
+    head _ = ?head_hole -- FIXME what the fuck am I doing lol
 
 implementation Group (Permutation n) where
   inverse = invert
