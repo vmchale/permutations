@@ -10,7 +10,7 @@
 build-idris-package {
   name = "permutations";
 
-  src = ../permutation;
+  src = ../../permutation;
 
   propagatedBuildInputs = [ prelude base ];
 
