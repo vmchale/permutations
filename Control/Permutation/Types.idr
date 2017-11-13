@@ -29,13 +29,37 @@ invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert x = ?f x
 
-||| FIXME this is dumb.
+||| This is essentially a group action. Given a permutation, we apply it to a vector.
+sigma : Permutation n -> Vect n a -> Vect n a
+sigma [] [] = []
+sigma (p::ps) (x::xs) = insert (sigma ps xs) p
+  where
+    insert : Vect n a -> Fin (S n) -> Vect (S n) a
+    insert l FZ = x::l
+    insert [] _ = [x]
+    insert (e::es) (FS k) = e :: insert es k
+
+toVector : Permutation n -> Vect n (Fin n)
+toVector {n} p = sigma p (sequential n)
+  where
+    sequential : (n : Nat) -> Vect n (Fin n)
+    sequential Z = []
+    sequential (S k) = FZ :: map FS (sequential k)
+
+private
+delete : Fin (S n) -> Permutation (S n) -> Permutation n
+delete FZ (j :: p) = p
+delete {n=Z} (FS _)  _ = Nil
+delete {n=S _} (FS i)  (j :: p) = (either lifter id $ strengthen j) :: delete i p
+  where
+    lifter (FS k) = k
+    lifter FZ = FZ
+delete {n=S _} (FS i)  (FZ :: p) = FZ :: delete i p
+
+export
 compose : Permutation n -> Permutation n -> Permutation n
-compose x Nil = x
-compose Nil y = y
-compose (FZ :: xs) (y :: ys) = y :: (compose xs ys)
-compose (x :: xs) (FZ :: ys) = x :: (compose xs ys)
-compose x y = ?f x y
+compose Nil p = p
+compose (i :: p) p' = (index i (toVector p')) :: (compose p (delete i p'))
 
 implementation Show (Fin n) where
   show FZ = "0"

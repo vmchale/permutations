@@ -37,11 +37,12 @@ specSuite =
     describe "getAll" $ do
       it "should work give the right number of elements for n=3" $ do
         length (toVector <$> enumerate 2) `shouldBe` 6
+    describe "compose" $ do
+      it "should compose nicely" $ do
+        toVector (compose trivial swap) `shouldBe` [2, 3, 0, 1]
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
         big : Permutation 11
         big = pi (FS 0) (FS 9)
-        swap1 : (Fin 4, Fin 4)
-        swap1 = (FS 0, FZ)
-        swap2 : (Fin 4, Fin 4)
-        swap2 = (FS 1, FZ)
+        swap : Permutation 4
+        swap = pi FZ (FS 1)
