@@ -15,8 +15,8 @@ specSuite =
       it "should permute a vector" $
         toVector trivial `shouldBe` [0, 3, 2, 1]
     describe "cycle precursor" $ do
-      it "should give a getElem function" $
-        getElem trivial 1 `shouldBe` 3
+      it "should give a fixNat function" $
+        fixNat trivial 1 `shouldBe` 3
       it "should give a orbit function" $
         take 4 (orbit trivial 1) `shouldBe` [1, 3, 1, 3]
       it "should give a orbit function" $
@@ -35,9 +35,6 @@ specSuite =
     describe "getAll" $ do
       it "should work give the right number of elements for n=3" $ do
         length (toVector <$> enumerate 2) `shouldBe` 6
-    describe "multiplySwaps" $ do
-      it "should give us something idk" $ do
-        map show (multiplySwaps swap1 swap2) `shouldBe` ["(012)"]
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
         big : Permutation 11

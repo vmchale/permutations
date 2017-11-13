@@ -5,10 +5,9 @@ bugtracker = http://www.github.com/vmchale/permutations/issues
 
 pkgs = specdris
 
-modules = Control.Permutation
+modules = Control.Permutation.Types
+        , Control.Permutation
         , Control.Permutation.Arity
         , Test.Spec
-
-sourcedir = src
 
 tests = Test.Spec.specSuite
