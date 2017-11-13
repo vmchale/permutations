@@ -24,7 +24,7 @@ id : Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :: id
 
--- TODO: apply a permutation to a vector, then use that to find an inverse?
+-- TODO
 invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert x = ?f x
