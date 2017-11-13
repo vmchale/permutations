@@ -6,6 +6,9 @@ This is a library providing a type-safe implementation of permutations.
 To my knowledge, It is the only library for type-safe permutations outside of
 Coq.
 
+It needs some performance tweaks in places, but otherwise it is fit for general
+consumption.
+
 ## Installation
 
 ```bash

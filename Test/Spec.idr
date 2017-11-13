@@ -30,7 +30,7 @@ specSuite =
         show (trivial <+> swap) `shouldBe` "(02)(13)"
     describe "invert" $ do
       it "should invert a permutation" $
-        invert trivial `shouldBe` (Just trivial)
+        inverse trivial `shouldBe` trivial
         -- TODO property test: composing disjoint swaps should commute!
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
