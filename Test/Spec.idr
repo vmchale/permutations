@@ -11,9 +11,11 @@ specSuite =
   spec $ do
     describe "trivial" $ do
       it "should behave approximately as expected" $
-        decompose (FS FZ :: FS FZ :: FZ :: Nil) `shouldBe` [(0, 2), (0, 1), (1, 2)]
+        swaps (FS FZ :: FS FZ :: FZ :: Nil) `shouldBe` [(0, 2), (0, 1), (1, 2)]
       it "should permute a vector" $
         toVector trivial `shouldBe` [0, 3, 2, 1]
+      it "work on reversed" $
+        toVector reverse `shouldBe` [3, 2, 1, 0]
     describe "cycle precursor" $ do
       it "should give a fixNat function" $
         fixNat trivial 1 `shouldBe` 3
@@ -24,9 +26,9 @@ specSuite =
     describe "cycles" $ do
       it "should be able to find cycles" $ do
         cycles trivial `shouldBe` [[0], [1, 3], [2]]
-    describe "decompose" $ do
+    describe "swaps" $ do
       it "should be able to factor a permutation as swaps" $ do
-        decompose trivial `shouldBe` [(1, 3)]
+        swaps trivial `shouldBe` [(1, 3)]
     describe "show" $ do
       it "should pretty-print for n < 10" $ do
         show trivial `shouldBe` "(13)"

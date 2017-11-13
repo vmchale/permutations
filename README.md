@@ -6,8 +6,8 @@ builds on Alyssa Carter's code
 and from a [Haskell
 library](https://hackage.haskell.org/package/permutation-0.5.0.5).
 
-It's currently very much a work in progress, but it is a nice example of
-something Idris can do that Haskell cannot.
+It is currently incomplete, but the functions available should in fact work as
+desired.
 
 ## Installation
 

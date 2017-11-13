@@ -41,7 +41,7 @@ enumerate : (n : Nat) -> List (Permutation (S n))
 enumerate Z = ((FZ :: Nil) :: Nil)
 enumerate n@(S m) = (::) <$> (toList $ finiteL n) <*> (enumerate m)
 
-||| 
+||| Show where an integer is sent.
 fixNat : Permutation n -> Fin n -> Fin n
 fixNat p n = index n $ (Delay $ toVector p)
   where
@@ -66,21 +66,27 @@ export
 cycles : Permutation (S n) -> List (List (Fin (S n)))
 cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
 
-private
-getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
-getSwapsHelp f p = (>>= f) $ cycles p
+implementation Show (Permutation (S n)) where
+  show {n} p = concatMap (go n) (cycles p)
+    where
+      go : (Show a) => Nat -> List a -> String
+      go _ l@(_::_::_) = if n <= 9
+        then "(" ++ concatMap show l ++ ")"
+        else "(" ++ concatMap ((++ ",") . show) l ++ ")"
+      go _ _ = ""
 
-||| Decompose a permutation into a product of swaps.
+||| swaps a permutation into a product of swaps.
 export
-decompose : Permutation (S n) -> List (Fin (S n), Fin (S n))
-decompose = getSwapsHelp overlappingPairs
+swaps : Permutation (S n) -> List (Fin (S n), Fin (S n))
+swaps = go overlappingPairs
   where
+    go : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
+    go f p = (>>= f) $ cycles p
     overlappingPairs [] = []
     overlappingPairs [x] = []
     overlappingPairs (x::xs@(y::_))= (x, y) :: overlappingPairs xs
 
 mutual
-
   even : Nat -> Bool
   even Z = True
   even (S k) = odd k
@@ -91,22 +97,14 @@ mutual
 
 export
 isEven : Permutation (S n) -> Bool
-isEven = even . length . decompose
+isEven = even . length . swaps
 
-implementation Show (Permutation (S n)) where
-  show {n} p = concatMap (go n) (cycles p)
-    where
-      go : (Show a) => Nat -> List a -> String
-      go _ l@(_::_::_) = if n <= 9
-        then "(" ++ concatMap show l ++ ")"
-        else "(" ++ concatMap ((++ ",") . show) l ++ ")"
-      go _ _ = ""
-
+||| Permutation that reverses a vector completely
 reverse : Permutation n
 reverse {n=Z} = []
 reverse {n=S _} = last :: reverse
 
-||| E.g. (1234) for S_4
+||| Shift everything over by one, e.g. (1234) for S_4
 cycle : Permutation n
 cycle {n=Z} = []
 cycle {n=S _} = FZ :: cycle
@@ -119,9 +117,8 @@ fill (FS k) = FS (zeros k) :: fill k
         zeros FZ = FZ
         zeros (FS _) = FZ
 
-private
-injects : Permutation m -> Permutation n -> Bool
-injects {m} {n} _ _ = m < n
+inject : (LTE m n) -> Permutation m -> Permutation n
+inject {m} {n} = ?hole
 
 ||| The permutation π_ij
 export

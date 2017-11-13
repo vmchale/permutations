@@ -9,7 +9,6 @@ big	Test/Spec.idr	/^        big : Permutation 11$/;"	c
 compose	Control/Permutation/Types.idr	/^compose : Permutation n -> Permutation n -> Permutation n$/;"	f
 cycle	Control/Permutation/Mod.idr	/^cycle : Permutation n$/;"	c
 cycles	Control/Permutation/Mod.idr	/^cycles : Permutation (S n) -> List (List (Fin (S n)))$/;"	f
-decompose	Control/Permutation/Mod.idr	/^decompose : Permutation (S n) -> List (Fin (S n), Fin (S n))$/;"	f
 enumerate	Control/Permutation/Mod.idr	/^enumerate : (n : Nat) -> List (Permutation (S n))$/;"	f
 even	Control/Permutation/Mod.idr	/^  even : Nat -> Bool$/;"	f
 fill	Control/Permutation/Mod.idr	/^fill : Fin n -> Permutation n$/;"	f
@@ -17,12 +16,12 @@ finOrbit	Control/Permutation/Mod.idr	/^finOrbit : Permutation (S n) -> Fin (S n)
 finiteL	Control/Permutation/Mod.idr	/^finiteL : (n : Nat) -> Vect (S n) (Fin (S n))$/;"	f
 fixNat	Control/Permutation/Mod.idr	/^fixNat : Permutation n -> Fin n -> Fin n$/;"	f
 fuckInputs	Control/Permutation/Arity.idr	/^fuckInputs : (p : Permutation 3) -> arityVect [a, b, c] d -> arityVect (sigma p [a, b, c]) d$/;"	f
-getSwapsHelp	Control/Permutation/Mod.idr	/^getSwapsHelp : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))$/;"	f
 go	Control/Permutation/Mod.idr	/^      go : (Show a) => Nat -> List a -> String$/;"	f
+go	Control/Permutation/Mod.idr	/^    go : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))$/;"	f
 go	Control/Permutation/Mod.idr	/^  go : Fin (S n) -> Stream (Fin (S n))$/;"	f
 id	Control/Permutation/Types.idr	/^id : Permutation n$/;"	c
 index	Control/Permutation/Mod.idr	/^    index : Fin l-> Lazy (Vect l e) -> e$/;"	f
-injects	Control/Permutation/Mod.idr	/^injects : Permutation m -> Permutation n -> Bool$/;"	f
+inject	Control/Permutation/Mod.idr	/^inject : (LTE m n) -> Permutation m -> Permutation n$/;"	f
 insert	Control/Permutation/Mod.idr	/^    insert : Vect n a -> Fin (S n) -> Vect (S n) a$/;"	f
 inverse	Control/Permutation/Types.idr	/^  inverse : t -> t$/;"	f
 invert	Control/Permutation/Types.idr	/^invert : Permutation n -> Permutation n$/;"	f
@@ -39,4 +38,5 @@ sigma	Control/Permutation/Mod.idr	/^sigma : Permutation n -> Vect n a -> Vect n 
 specSuite	Test/Spec.idr	/^specSuite : IO ()$/;"	c
 swap1	Test/Spec.idr	/^        swap1 : (Fin 4, Fin 4)$/;"	c
 swap2	Test/Spec.idr	/^        swap2 : (Fin 4, Fin 4)$/;"	c
+swaps	Control/Permutation/Mod.idr	/^swaps : Permutation (S n) -> List (Fin (S n), Fin (S n))$/;"	f
 toVector	Control/Permutation/Mod.idr	/^toVector : Permutation n -> Vect n (Fin n)$/;"	f
