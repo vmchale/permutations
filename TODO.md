@@ -1,6 +1,5 @@
-- [ ] `Indexable` interface
-  - [ ] also `bounded` for things w/ bounded size?
-- [ ] `Group` interface would be nice as well
-- [ ] separate package for the proofs
-- [ ] display in cycle notation, e.g. (12)(345)
-- [ ] parse cycle notation e.g. (12)(345), might require lightyear?
+# Bugs
+- [ ] Pretty-printer fails for `n >= 10`.
+# Features
+- [ ] Parse cycle notation.
+- [ ] `Control.Permutation.Arity` lacks sufficient generality.

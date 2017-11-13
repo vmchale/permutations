@@ -24,11 +24,6 @@ id : Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :: id
 
--- TODO
-invert : Permutation n -> Permutation n
-invert Nil = Nil
-invert x = ?f x
-
 ||| This is essentially a group action. Given a permutation, we apply it to a vector.
 sigma : Permutation n -> Vect n a -> Vect n a
 sigma [] [] = []
@@ -56,7 +51,7 @@ delete {n=S _} (FS i)  (j :: p) = (either lifter id $ strengthen j) :: delete i 
     lifter FZ = FZ
 delete {n=S _} (FS i)  (FZ :: p) = FZ :: delete i p
 
-export
+private
 compose : Permutation n -> Permutation n -> Permutation n
 compose Nil p = p
 compose (i :: p) p' = (index i (toVector p')) :: (compose p (delete i p'))
@@ -70,7 +65,3 @@ implementation Semigroup (Permutation n) where
 
 implementation Monoid (Permutation n) where
   neutral = id
-
-implementation Group (Permutation n) where
-  inverse = invert
--- TODO Permutations are a type of lens!! And should be viewed as such.
