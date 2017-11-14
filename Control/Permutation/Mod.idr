@@ -59,7 +59,7 @@ orbit p {n} i = i :: go i where
 
 ||| Return the orbit of some permutation.
 finOrbit : Permutation (S n) -> Fin (S n) -> List (Fin (S n))
-finOrbit p {n} i = nub $ take n (orbit p i)
+finOrbit p {n} i = nub $ take (S n) (orbit p i)
 
 ||| Return a list of disjoint cycles given a permutation. We use this for our
 ||| pretty-printer.
@@ -78,14 +78,15 @@ implementation Show (Permutation (S n)) where
 
 ||| swaps a permutation into a product of swaps.
 export
-swaps : Permutation (S n) -> List (Fin (S n), Fin (S n))
-swaps = go overlaps
+swaps : Permutation n -> List (Fin n, Fin n)
+swaps {n=Z} _ = []
+swaps {n=n@(S _)} p = go overlaps p
   where
     go : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
     go f p = (>>= f) $ cycles p
     overlaps [] = []
     overlaps [x] = []
-    overlaps (x::xs@(y::_))= (x, y) :: overlaps xs
+    overlaps (x::xs@(y::ys))= (x, y) :: overlaps xs
 
 mutual
   private
@@ -100,18 +101,13 @@ mutual
 
 ||| Test whether a permutation is even.
 export
-isEven : Permutation (S n) -> Bool
+isEven : Permutation n -> Bool
 isEven = even . length . swaps
 
 ||| This permutation reverses a vector completely
 reverse : Permutation n
 reverse {n=Z} = []
 reverse {n=S _} = last :: reverse
-
-||| This permutation shifts everything over by one, e.g. (1234) for S_4
-cycle : Permutation n
-cycle {n=Z} = []
-cycle {n=S _} = FZ :: cycle
 
 private
 fill : Fin n -> Permutation n

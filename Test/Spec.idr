@@ -9,6 +9,9 @@ export
 specSuite : IO ()
 specSuite =
   spec $ do
+    describe "isEven" $ do
+      it "should work" $ do
+        map isEven ps `shouldBe` [False, True]
     describe "trivial" $ do
       it "should permute a vector" $
         toVector trivial `shouldBe` [0, 3, 2, 1]
@@ -40,3 +43,5 @@ specSuite =
         swap = pi FZ (FS 1)
         pList : List (Permutation 3)
         pList = enumerate
+        ps : List (Permutation 2)
+        ps = enumerate
