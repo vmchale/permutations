@@ -8,6 +8,7 @@ pkgs = specdris
 modules = Control.Permutation.Types
         , Control.Permutation
         , Control.Permutation.Arity
+        , Data.Group
         , Test.Spec
 
 tests = Test.Spec.specSuite

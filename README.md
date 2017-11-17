@@ -15,6 +15,17 @@ It needs a couple tweaks before it's ready for general use, but everything
 
 ## Use
 
+### Tips
+
+The most useful thing this library provides is a `Group` instance for
+permutations. You can multiply two elements with `<+>`, invert with `inverse`,
+an so on.
+
+#### Notation
+
+The `Show` instance for `Permutation` uses cycle notation. You can read more
+[here](http://dlmf.nist.gov/26.13) if you find it confusing.
+
 ### Documentation
 
 You can find documentation

@@ -2,6 +2,7 @@ module Control.Permutation.Types
 
 import Data.List
 import Data.Vect
+import Data.Group
 
 %default total
 
@@ -15,10 +16,6 @@ data Permutation : Nat -> Type where
 implementation Eq (Permutation n) where
   (==) Nil Nil = True
   (==) (x :: xs) (y :: ys) = x == y && xs == ys
-
-||| This extends 'Monoid' by defining an inverse for every element.
-interface (Monoid t) => Group (t : Type) where
-  inverse : t -> t
 
 private
 id : Permutation n
