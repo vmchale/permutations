@@ -8,6 +8,11 @@ module Data.Group
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
+||| Stream of elements starting at some given element.
+generate : (Group g) => g -> Stream g
+generate g1 = h where
+  h = assert_total $ g1 :: map (<+> g1) h
+
 ||| Whether a group element is idempotent
 idempotent : (Eq g, Semigroup g) => g -> Bool
 idempotent x = x == (x <+> x)

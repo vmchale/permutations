@@ -35,7 +35,7 @@ enumerate {n=n@(S m)} = (::) <$> (toList $ finiteL m) <*> enumerate
 ||| @p A permutation
 ||| @m The integer
 fixNat : (p : Permutation n) -> (m : Fin n) -> Fin n
-fixNat p m = index m $ (Delay $ toVector p)
+fixNat p m = index m $ (toVector p)
   where
     index : Fin l-> Lazy (Vect l e) -> e
     index FZ     (x::xs) = x
@@ -99,7 +99,7 @@ swaps {n=n@(S _)} p = go overlaps p
 
 -- TODO exterior algebras in Idris (hmm...)
 
-mutual
+{-mutual
   private
   even : Nat -> Bool
   even Z = True
@@ -108,7 +108,7 @@ mutual
   private
   odd : Nat -> Bool
   odd Z = False
-  odd (S k) = even k
+  odd (S k) = even k-}
 
 ||| Test whether a permutation is even.
 export
