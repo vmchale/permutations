@@ -111,4 +111,4 @@ pi : Fin n -> Fin n -> Permutation n
 pi (FS j) (FS k) = FZ :: pi j k
 pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
-pi FZ FZ = id
+pi FZ FZ = neutral
