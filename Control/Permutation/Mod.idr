@@ -25,18 +25,6 @@ enumerate {n=Z} = Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
 enumerate {n=n@(S m)} = (::) <$> (toList $ finiteL m) <*> enumerate
 
-private
-invert : Permutation n -> Permutation n
-invert Nil = Nil
-invert x = head . map snd $ filter ((==id) . fst) ((\y => (x <+> y, y)) <$> enumerate)
-  where
-    head : List a -> a
-    head (x::xs) = x
-    head _ = ?head_hole -- FIXME what the fuck am I doing lol
-
-implementation Group (Permutation n) where
-  inverse = invert
-
 ||| Show where an integer is sent.
 ||| @p A permutation
 ||| @m The integer

@@ -20,6 +20,7 @@ implementation Eq (Permutation n) where
 interface (Monoid t) => Group (t : Type) where
   inverse : t -> t
 
+private
 id : Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :: id
@@ -34,7 +35,7 @@ sigma (p::ps) (x::xs) = insert (sigma ps xs) p
     insert [] _ = [x]
     insert (e::es) (FS k) = e :: insert es k
 
-toVector : Permutation n -> Vect n (Fin n)
+toVector : Permutation n -> Lazy (Vect n (Fin n))
 toVector {n} p = sigma p (sequential n)
   where
     sequential : (n : Nat) -> Vect n (Fin n)
@@ -56,6 +57,19 @@ compose : Permutation n -> Permutation n -> Permutation n
 compose Nil p = p
 compose (i :: p) p' = (index i (toVector p')) :: (compose p (delete i p'))
 
+private
+invert : Permutation n -> Permutation n
+invert Nil = Nil
+invert p@(i :: is) = (index i' (toVector p)) :: (delete i' p)
+  where
+    i' = index i (toVector p)
+
+implementation Show a => Show (Lazy a) where
+  show (Delay x) = show x
+
+implementation Eq a => Eq (Lazy a) where
+  (==) (Delay x) (Delay y) = x == y
+
 implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
@@ -65,3 +79,7 @@ implementation Semigroup (Permutation n) where
 
 implementation Monoid (Permutation n) where
   neutral = id
+
+implementation Group (Permutation n) where
+  inverse = invert
+

@@ -34,6 +34,9 @@ specSuite =
     describe "invert" $ do
       it "should invert a permutation" $
         inverse trivial `shouldBe` trivial
+      it "should satisfy x⁻¹x=e" $
+        inverse trivial <+> trivial `shouldBe` neutral
+        
         -- TODO property test: composing disjoint swaps should commute!
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
