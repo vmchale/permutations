@@ -1,7 +1,5 @@
 # permutations
 
-[![Build Status](https://travis-ci.org/vmchale/permutations.svg?branch=master)](https://travis-ci.org/vmchale/permutations)
-
 This is a library providing a type-safe implementation of permutations.
 To my knowledge, It is the only such library outside of
 Coq.
