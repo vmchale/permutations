@@ -97,7 +97,7 @@ swaps {n=n@(S _)} p = go overlaps p
     overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
     overlaps x = []
 
-{-mutual
+mutual
   private
   even : Nat -> Bool
   even Z = True
@@ -106,7 +106,7 @@ swaps {n=n@(S _)} p = go overlaps p
   private
   odd : Nat -> Bool
   odd Z = False
-  odd (S k) = even k-}
+  odd (S k) = even k
 
 ||| Test whether a permutation is even.
 export
