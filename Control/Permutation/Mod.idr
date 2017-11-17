@@ -1,5 +1,6 @@
 module Control.Permutation.Mod
 
+import Prelude.Nat
 import Data.List
 import Data.Vect
 import Control.Permutation.Types
@@ -13,6 +14,11 @@ natToFin : (n : Nat) -> Fin (S n)
 natToFin Z = FZ
 natToFin (S k) = FS k' where k' = natToFin k
 
+||| This permutation reverses a vector completely
+reverse : Permutation n
+reverse {n=Z} = []
+reverse {n=S _} = last :: reverse
+
 private
 finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
@@ -20,7 +26,7 @@ finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
 ||| All permutations of a certain order.
 export
-enumerate : List (Permutation n)
+enumerate : List (Permutation n) -- TODO vector of length n!
 enumerate {n=Z} = Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
 enumerate {n=n@(S m)} = (::) <$> (toList $ finiteL m) <*> enumerate
@@ -61,41 +67,8 @@ implementation Show (Permutation (S n)) where
       go : (Show a) => Nat -> List a -> String
       go _ l@(_::_::_) = if n <= 9
         then "(" ++ concatMap show l ++ ")"
-        else "(" ++ concatMap ((++ ",") . show) l ++ ")"
+        else "(" ++ concat ((intersperse "," . map show) l) ++ ")"
       go _ _ = ""
-
-||| swaps a permutation into a product of swaps.
-export
-swaps : Permutation n -> List (Fin n, Fin n)
-swaps {n=Z} _ = []
-swaps {n=n@(S _)} p = go overlaps p
-  where
-    go : (List (Fin (S n)) -> List (Fin (S n), Fin (S n))) -> Permutation (S n) -> List (Fin (S n), Fin (S n))
-    go f p = (>>= f) $ cycles p
-    overlaps [] = []
-    overlaps [x] = []
-    overlaps (x::xs@(y::ys))= (x, y) :: overlaps xs
-
-mutual
-  private
-  even : Nat -> Bool
-  even Z = True
-  even (S k) = odd k
-
-  private
-  odd : Nat -> Bool
-  odd Z = False
-  odd (S k) = even k
-
-||| Test whether a permutation is even.
-export
-isEven : Permutation n -> Bool
-isEven = even . length . swaps
-
-||| This permutation reverses a vector completely
-reverse : Permutation n
-reverse {n=Z} = []
-reverse {n=S _} = last :: reverse
 
 private
 fill : Fin n -> Permutation n
@@ -112,3 +85,33 @@ pi (FS j) (FS k) = FZ :: pi j k
 pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = neutral
+
+||| swaps a permutation into a product of swaps.
+export
+swaps : Permutation n -> List (Permutation n)
+swaps {n=Z} _ = []
+swaps {n=n@(S _)} p = go overlaps p
+  where
+    go : (List (Fin (S n)) -> List (Permutation (S n))) -> Permutation (S n) -> List (Permutation (S n))
+    go f p = (>>= f) $ cycles p
+    overlaps [] = []
+    overlaps [x] = []
+    overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
+
+-- TODO exterior algebras in Idris (hmm...)
+
+mutual
+  private
+  even : Nat -> Bool
+  even Z = True
+  even (S k) = odd k
+
+  private
+  odd : Nat -> Bool
+  odd Z = False
+  odd (S k) = even k
+
+||| Test whether a permutation is even.
+export
+isEven : Permutation n -> Bool
+isEven = even . length . swaps

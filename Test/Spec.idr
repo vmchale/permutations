@@ -38,6 +38,7 @@ specSuite =
         inverse trivial <+> trivial `shouldBe` neutral
         
         -- TODO property test: composing disjoint swaps should commute!
+        -- Also associativity.
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
         big : Permutation 11

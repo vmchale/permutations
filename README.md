@@ -4,9 +4,6 @@ This is a library providing a type-safe implementation of permutations.
 To my knowledge, It is the only such library outside of
 Coq.
 
-It needs a couple tweaks before it's ready for general use, but everything
-*should* be working correctly now.
-
 ## Installation
 
 ```bash
@@ -20,6 +17,10 @@ It needs a couple tweaks before it's ready for general use, but everything
 The most useful thing this library provides is a `Group` instance for
 permutations. You can multiply two elements with `<+>`, invert with `inverse`,
 an so on.
+
+The [lazy\_matrices](https://hub.darcs.net/vmchale/lazy_matrices) package uses
+permutations to compute determinants with the [Leibniz
+formula](https://www.encyclopediaofmath.org/index.php?title=Determinant).
 
 #### Notation
 
