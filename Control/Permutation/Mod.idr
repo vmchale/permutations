@@ -100,7 +100,7 @@ swaps {n=n@(S _)} p = go overlaps p
 
 -- TODO exterior algebras in Idris (hmm...)
 
-mutual
+{-mutual
   private
   even : Nat -> Bool
   even Z = True
@@ -109,7 +109,7 @@ mutual
   private
   odd : Nat -> Bool
   odd Z = False
-  odd (S k) = even k
+  odd (S k) = even k-}
 
 ||| Test whether a permutation is even.
 export

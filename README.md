@@ -19,7 +19,7 @@ permutations. You can multiply two elements with `<+>`, invert with `inverse`,
 an so on.
 
 The [lazy\_matrices](https://hub.darcs.net/vmchale/lazy_matrices) package uses
-permutations to compute determinants with the [Leibniz
+permutations to compute determinants with the [Laplace
 formula](https://www.encyclopediaofmath.org/index.php?title=Determinant).
 
 #### Notation
