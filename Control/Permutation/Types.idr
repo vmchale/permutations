@@ -43,11 +43,11 @@ private
 delete : Fin (S n) -> Permutation (S n) -> Permutation n
 delete FZ (j :: p) = p
 delete {n=Z} (FS _)  _ = Nil
+delete {n=S _} (FS i)  (FZ :: p) = FZ :: delete i p
 delete {n=S _} (FS i)  (j :: p) = (either lifter id $ strengthen j) :: delete i p
   where
     lifter (FS k) = k
     lifter FZ = FZ
-delete {n=S _} (FS i)  (FZ :: p) = FZ :: delete i p
 
 private
 compose : Permutation n -> Permutation n -> Permutation n
