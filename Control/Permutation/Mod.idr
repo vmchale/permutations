@@ -99,7 +99,7 @@ reverse {n=S _} = last :: reverse
 
 private
 fill : Fin n -> Permutation n
-fill FZ = id
+fill FZ = neutral
 fill (FS k) = FS (zeros k) :: fill k
   where zeros : Fin m -> Fin m
         zeros FZ = FZ

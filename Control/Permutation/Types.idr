@@ -57,7 +57,7 @@ compose : Permutation n -> Permutation n -> Permutation n
 compose Nil p = p
 compose (i :: p) p' = (index i (toVector p')) :: (compose p (delete i p'))
 
-private
+export
 invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert p@(i :: is) = (index i' (toVector p)) :: (delete i' p)
@@ -82,4 +82,3 @@ implementation Monoid (Permutation n) where
 
 implementation Group (Permutation n) where
   inverse = invert
-
