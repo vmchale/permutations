@@ -97,8 +97,6 @@ swaps {n=n@(S _)} p = go overlaps p
     overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
     overlaps x = []
 
--- TODO exterior algebras in Idris (hmm...)
-
 {-mutual
   private
   even : Nat -> Bool
