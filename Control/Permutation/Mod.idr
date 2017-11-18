@@ -61,6 +61,10 @@ export
 cycles : Permutation (S n) -> List (List (Fin (S n)))
 cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
 
+export
+order : Permutation (S n) -> Nat
+order = foldr lcm 1 . map length . cycles
+
 implementation Show (Permutation (S n)) where
   show {n} p = concatMap (go n) (cycles p)
     where
@@ -97,7 +101,7 @@ swaps {n=n@(S _)} p = go overlaps p
     overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
     overlaps x = []
 
-mutual
+{-mutual
   private
   even : Nat -> Bool
   even Z = True
@@ -106,7 +110,7 @@ mutual
   private
   odd : Nat -> Bool
   odd Z = False
-  odd (S k) = even k
+  odd (S k) = even k-}
 
 ||| Test whether a permutation is even.
 export
