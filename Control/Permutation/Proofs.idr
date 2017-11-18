@@ -1,10 +1,15 @@
 module Control.Permutation.Proofs
 
 import Control.Permutation.Types
+import Control.Permutation.Mod
 
--- identity : (p1 : Permutation n) -> p1 = neutral <+> p1
--- identity {n=Z} Nil = Refl
--- identity {n=S _} _ = ?hole
+%access public export
+%default total
 
--- associative : (p1 : Permutation n) -> (p2 : Permutation n) -> (p3 : Permutation n) -> p1 <+> (p2 <+> p3) = (p1 <+> p2) <+> p3
--- associative = ?proof_hole
+factorialIncr : (n : Nat) -> LTE (factorial n) (factorial (S n))
+factorialIncr Z = lteRefl
+factorialIncr n = ?idk_hole
+
+factorialLTE : (n : Nat) -> LTE 1 (factorial n)
+factorialLTE Z = lteRefl
+factorialLTE (S k) = lteTransitive (factorialLTE k) (factorialIncr k)

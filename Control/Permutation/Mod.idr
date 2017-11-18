@@ -37,7 +37,7 @@ combine {m} {n} fs xs = rewrite multCommutative m n in
 
 ||| All permutations of a certain order.
 export
-enumerate : Vect (factorial n) (Permutation n) -- List (Permutation n) -- TODO vector of length n!
+enumerate : Vect (factorial n) (Permutation n)
 enumerate {n=Z} = Nil :: Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
 enumerate {n=n@(S m)} = combine (map (::) (finiteL m)) enumerate
