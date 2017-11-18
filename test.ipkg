@@ -10,6 +10,7 @@ modules = Control.Permutation.Types
         , Control.Permutation.Proofs
         , Control.Permutation.Arity
         , Data.Group
+        , Data.LazyVect
         , Test.Spec
 
 tests = Test.Spec.specSuite

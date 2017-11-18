@@ -4,6 +4,7 @@ import Prelude.Nat
 import Data.List
 import Data.Vect
 import Control.Permutation.Types
+import Data.LazyVect
 
 %default total
 
@@ -20,7 +21,7 @@ reverse {n=Z} = []
 reverse {n=S _} = last :: reverse
 
 private
-finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
+finiteL : (n : Nat) -> LazyVect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
 finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
@@ -28,16 +29,16 @@ factorial : Nat -> Nat
 factorial Z = S Z
 factorial (S k) = (S k) * factorial k
 
-combine : Vect m (a -> b) -> Vect n a -> Vect (m * n) b
+combine : LazyVect m (a -> b) -> LazyVect n a -> LazyVect (m * n) b
 combine {m} {n} fs xs = rewrite multCommutative m n in
                                 concat $ map (g fs) xs
   where
-    g : Vect m (a -> b) -> a -> Vect m b
+    g : LazyVect m (a -> b) -> a -> LazyVect m b
     g fs x = fs <*> pure x
 
 ||| All permutations of a certain order.
 export
-enumerate : Vect (factorial n) (Permutation n)
+enumerate : LazyVect (factorial n) (Permutation n)
 enumerate {n=Z} = Nil :: Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
 enumerate {n=n@(S m)} = combine (map (::) (finiteL m)) enumerate
