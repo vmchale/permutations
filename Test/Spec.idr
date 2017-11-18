@@ -25,9 +25,6 @@ specSuite =
     describe "show" $ do
       it "should pretty-print for n < 10" $ do
         show trivial `shouldBe` "(13)"
-    describe "enumerate" $ do
-      it "should work give the right number of elements for n=3" $ do
-        length (toVector <$> pList) `shouldBe` 6
     describe "compose" $ do
       it "should compose nicely" $ do
         show (trivial <+> swap) `shouldBe` "(02)(13)"
@@ -45,7 +42,5 @@ specSuite =
         big = pi (FS 0) (FS 9)
         swap : Permutation 4
         swap = pi FZ (FS 1)
-        pList : List (Permutation 3)
-        pList = enumerate
-        ps : List (Permutation 2)
+        ps : Vect 2 (Permutation 2)
         ps = enumerate

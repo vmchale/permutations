@@ -24,12 +24,23 @@ finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
 finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
+factorial : Nat -> Nat
+factorial Z = S Z
+factorial (S k) = (S k) * factorial k
+
+combine : Vect m (a -> b) -> Vect n a -> Vect (m * n) b
+combine {m} {n} fs xs = rewrite multCommutative m n in
+                                concat $ map (g fs) xs
+  where
+    g : Vect m (a -> b) -> a -> Vect m b
+    g fs x = fs <*> pure x
+
 ||| All permutations of a certain order.
 export
-enumerate : List (Permutation n) -- TODO vector of length n!
-enumerate {n=Z} = Nil
+enumerate : Vect (factorial n) (Permutation n) -- List (Permutation n) -- TODO vector of length n!
+enumerate {n=Z} = Nil :: Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
-enumerate {n=n@(S m)} = (::) <$> (toList $ finiteL m) <*> enumerate
+enumerate {n=n@(S m)} = combine (map (::) (finiteL m)) enumerate
 
 ||| Show where an integer is sent.
 ||| @p A permutation
