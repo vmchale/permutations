@@ -3,7 +3,6 @@ module Test.Spec
 import Specdris.Spec
 import Control.Permutation
 import Control.Permutation.Arity
-import Data.Vect.Lazy
 import Data.Vect
 
 export
