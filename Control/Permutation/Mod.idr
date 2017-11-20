@@ -6,7 +6,6 @@ import Data.Vect
 import Control.Permutation.Types
 import Data.Vect
 import Data.Nat.Parity
-import Data.List.Lazy
 
 %default total
 
@@ -72,7 +71,7 @@ finOrbit p {n} i = nub $ take (S n) (orbit p i)
 ||| Return a list of disjoint cycles given a permutation. We use this for our
 ||| pretty-printer.
 export
-cycles : Permutation (S n) -> LazyList (LazyList (Fin (S n)))
+cycles : Permutation (S n) -> List (List (Fin (S n)))
 cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
 
 export
@@ -82,7 +81,7 @@ order = foldr lcm 1 . map length . cycles
 implementation Show (Permutation (S n)) where
   show {n} p = concatMap (go n) (cycles p)
     where
-      go : (Show a) => Nat -> LazyList a -> String
+      go : (Show a) => Nat -> List a -> String
       go _ l@(_::_::_) = if n <= 9
         then "(" ++ concatMap show l ++ ")"
         else "(" ++ concat ((intersperse "," . map show) l) ++ ")"
@@ -106,11 +105,11 @@ pi FZ FZ = neutral
 
 ||| swaps a permutation into a product of swaps.
 export
-swaps : Permutation n -> LazyList (Permutation n)
+swaps : Permutation n -> List (Permutation n)
 swaps {n=Z} _ = []
 swaps {n=n@(S _)} p = go overlaps p
   where
-    go : (LazyList (Fin (S n)) -> LazyList (Permutation (S n))) -> Permutation (S n) -> LazyList (Permutation (S n))
+    go : (List (Fin (S n)) -> List (Permutation (S n))) -> Permutation (S n) -> List (Permutation (S n))
     go f p = (>>= f) $ cycles p
     overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
     overlaps x = []

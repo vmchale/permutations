@@ -32,7 +32,7 @@ sigma (p::ps) (x::xs) = insert (sigma ps xs) p
     insert [] _ = [x]
     insert (e::es) (FS k) = e :: insert es k
 
-toVector : Permutation n -> Lazy (Vect n (Fin n))
+toVector : Permutation n -> Vect n (Fin n)
 toVector {n} p = sigma p (sequential n)
   where
     sequential : (n : Nat) -> Vect n (Fin n)

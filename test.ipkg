@@ -11,8 +11,7 @@ modules = Control.Permutation.Types
         , Control.Permutation.Proofs
         , Control.Permutation.Arity
         , Data.Group
-        , Data.Vect.Lazy
-        , Data.List.Lazy
+        , Data.Indexable
         , Test.Spec
 
 tests = Test.Spec.specSuite
