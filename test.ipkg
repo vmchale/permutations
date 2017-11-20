@@ -4,13 +4,15 @@ sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
 pkgs = specdris
+     , contrib
 
 modules = Control.Permutation.Types
         , Control.Permutation
         , Control.Permutation.Proofs
         , Control.Permutation.Arity
         , Data.Group
-        , Data.LazyVect
+        , Data.Vect.Lazy
+        , Data.List.Lazy
         , Test.Spec
 
 tests = Test.Spec.specSuite

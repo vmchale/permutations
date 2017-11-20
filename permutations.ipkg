@@ -9,10 +9,13 @@ author = Vanessa McHale
 sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
+pkgs = contrib
+
 modules = Control.Permutation,
           Control.Permutation.Types,
           Control.Permutation.Mod,
           Control.Permutation.Proofs,
           Control.Permutation.Arity,
-          Data.LazyVect,
+          Data.Vect.Lazy,
+          Data.List.Lazy,
           Data.Group

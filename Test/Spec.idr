@@ -3,7 +3,7 @@ module Test.Spec
 import Specdris.Spec
 import Control.Permutation
 import Control.Permutation.Arity
-import Data.LazyVect
+import Data.Vect.Lazy
 import Data.Vect
 
 export
@@ -43,5 +43,5 @@ specSuite =
         big = pi (FS 0) (FS 9)
         swap : Permutation 4
         swap = pi FZ (FS 1)
-        ps : LazyVect 2 (Permutation 2)
+        ps : Vect 2 (Permutation 2)
         ps = enumerate
