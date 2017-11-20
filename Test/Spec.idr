@@ -43,4 +43,4 @@ specSuite =
         swap : Permutation 4
         swap = pi FZ (FS 1)
         ps : Vect 2 (Permutation 2)
-        ps = enumerate
+        ps = enumerateStrict

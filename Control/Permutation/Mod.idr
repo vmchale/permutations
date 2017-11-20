@@ -5,6 +5,7 @@ import Data.List
 import Data.Vect
 import Control.Permutation.Types
 import Data.Vect
+import Data.Vect.Lazy
 import Data.Nat.Parity
 
 %default total
@@ -26,9 +27,21 @@ finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
 finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
+private
+lfiniteL : (n : Nat) -> LazyVect (S n) (Fin (S n))
+lfiniteL Z = FZ :: Nil
+lfiniteL n@(S m) = natToFin n :: (map weaken $ lfiniteL m)
+
 factorial : Nat -> Nat
 factorial Z = S Z
 factorial (S k) = (S k) * factorial k
+
+combineL : LazyVect m (a -> b) -> LazyVect n a -> LazyVect (m * n) b
+combineL {m} {n} fs xs = rewrite multCommutative m n in
+                                 concat $ map (g fs) xs
+  where
+    g : LazyVect m (a -> b) -> a -> LazyVect m b
+    g fs x = fs <*> pure x
 
 combine : Vect m (a -> b) -> Vect n a -> Vect (m * n) b
 combine {m} {n} fs xs = rewrite multCommutative m n in
@@ -37,12 +50,19 @@ combine {m} {n} fs xs = rewrite multCommutative m n in
     g : Vect m (a -> b) -> a -> Vect m b
     g fs x = fs <*> pure x
 
-||| All permutations of a certain order.
+||| All permutations, enumerated lazily
 export
-enumerate : Vect (factorial n) (Permutation n)
+enumerate : LazyVect (factorial n) (Permutation n)
 enumerate {n=Z} = Nil :: Nil
 enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
-enumerate {n=n@(S m)} = combine (map (::) (finiteL m)) enumerate
+enumerate {n=n@(S m)} = combineL (map (::) (lfiniteL m)) enumerate
+
+||| All permutations of a certain order.
+export
+enumerateStrict : Vect (factorial n) (Permutation n)
+enumerateStrict {n=Z} = Nil :: Nil
+enumerateStrict {n=S Z} = ((FZ :: Nil) :: Nil)
+enumerateStrict {n=n@(S m)} = combine (map (::) (finiteL m)) enumerateStrict
 
 ||| Show where an integer is sent.
 ||| @p A permutation
@@ -77,6 +97,10 @@ cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
 export
 order : Permutation (S n) -> Nat
 order = foldr lcm 1 . map length . cycles
+
+||| Alternate method of displaying a permutation.
+quickShow : Permutation n -> String
+quickShow = show . toVector
 
 implementation Show (Permutation (S n)) where
   show {n} p = concatMap (go n) (cycles p)

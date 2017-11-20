@@ -10,6 +10,7 @@ modules = Control.Permutation.Types
         , Control.Permutation
         , Control.Permutation.Proofs
         , Control.Permutation.Arity
+        , Data.Vect.Lazy
         , Data.Group
         , Data.Indexable
         , Test.Spec

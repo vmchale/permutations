@@ -17,4 +17,5 @@ modules = Control.Permutation,
           Control.Permutation.Proofs,
           Control.Permutation.Arity,
           Data.Indexable,
+          Data.Vect.Lazy,
           Data.Group
