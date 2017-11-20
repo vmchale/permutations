@@ -10,6 +10,8 @@ Coq.
  $ idris --install permutations.ipkg
 ```
 
+You may need to grab the latest Idris compiler from HEAD.
+
 ## Use
 
 ### Tips
