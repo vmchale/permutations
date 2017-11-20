@@ -92,7 +92,10 @@ finOrbit p {n} i = nub $ take (S n) (orbit p i)
 ||| pretty-printer.
 export
 cycles : Permutation (S n) -> List (List (Fin (S n)))
-cycles p {n} = nub . map sort . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
+cycles p {n} = nubBy g . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
+  where
+    g : List (Fin (S n)) -> List (Fin (S n)) -> Bool
+    g x y = and $ map (`elem` y) x
 
 export
 order : Permutation (S n) -> Nat
