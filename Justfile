@@ -1,7 +1,3 @@
-bench:
-    @idris --build bench.ipkg
-    bench "./permutation-bench"
-
 test:
     @idris --testpkg test.ipkg
 

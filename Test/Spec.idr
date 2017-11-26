@@ -26,7 +26,9 @@ specSuite =
       it "should pretty-print for n < 10" $ do
         show trivial `shouldBe` "(13)"
     describe "compose" $ do
-      it "should compose nicely" $ do
+      it "should compose nicely (1/2)" $ do
+        toVector (trivial <+> disjoint) `shouldBe` [2, 3, 0, 1]
+      it "should compose nicely (2/2)" $ do
         show (trivial <+> swap) `shouldBe` "(02)(13)"
     describe "invert" $ do
       it "should invert a permutation" $
@@ -38,6 +40,8 @@ specSuite =
         -- Also associativity.
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
+        disjoint : Permutation 4
+        disjoint = pi (FZ) (FS 1)
         big : Permutation 11
         big = pi (FS 0) (FS 9)
         swap : Permutation 4

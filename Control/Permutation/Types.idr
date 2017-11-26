@@ -3,6 +3,7 @@ module Control.Permutation.Types
 import Data.List
 import Data.Vect
 import Data.Group
+import Data.Vect.Lazy
 
 %default total
 
@@ -43,8 +44,8 @@ private
 delete : Fin (S n) -> Permutation (S n) -> Permutation n
 delete FZ (j :: p) = p
 delete {n=Z} (FS _)  _ = Nil
-delete {n=S _} (FS i)  (FZ :: p) = FZ :: delete i p
-delete {n=S _} (FS i)  (j :: p) = (either lifter id $ strengthen j) :: delete i p
+delete {n=S _} (FS i) (FZ :: p) = FZ :: delete i p
+delete {n=S _} (FS i) (j :: p) = (either lifter id $ strengthen j) :: delete i p
   where
     lifter (FS k) = k
     lifter FZ = FZ
