@@ -9,7 +9,7 @@ import Control.Permutation.Mod
 ||| Proof that (n + 1)! >= n!
 factorialIncr : (n : Nat) -> LTE (factorial n) (factorial (S n))
 factorialIncr Z = lteRefl
-factorialIncr n = ?idk_hole
+factorialIncr n = lteAddRight (factorial n)
 
 ||| Proof that n! >= 1
 factorialLTE : (n : Nat) -> LTE 1 (factorial n)
