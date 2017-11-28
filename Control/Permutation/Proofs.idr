@@ -3,7 +3,7 @@ module Control.Permutation.Proofs
 import Control.Permutation.Types
 import Control.Permutation.Mod
 
-%access public export
+%access export
 %default total
 
 ||| Proof that (n + 1)! >= n!
