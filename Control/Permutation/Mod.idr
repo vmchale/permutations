@@ -70,7 +70,7 @@ enumerateStrict {n=n@(S m)} = combine (map (::) (finiteL m)) enumerateStrict
 fixNat : (p : Permutation n) -> (m : Fin n) -> Fin n
 fixNat p m = index m $ (toVector p)
   where
-    index : Fin l-> Lazy (Vect l e) -> e
+    index : Fin l -> Lazy (Vect l e) -> e
     index FZ     (x::xs) = x
     index (FS k) (x::xs) = index k xs
 

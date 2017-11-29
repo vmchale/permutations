@@ -1,3 +1,6 @@
+build:
+    @idris --build permutations.ipkg
+
 test:
     @idris --testpkg test.ipkg
 
