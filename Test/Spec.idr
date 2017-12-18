@@ -9,6 +9,9 @@ export
 specSuite : IO ()
 specSuite =
   spec $ do
+    describe "circulate" $ do
+      it "should work" $ do
+        show circ `shouldBe` "(0123)"
     describe "isEven" $ do
       it "should work" $ do
         map isEven ps `shouldBe` [False, True]
@@ -48,3 +51,5 @@ specSuite =
         swap = pi FZ (FS 1)
         ps : Vect 2 (Permutation 2)
         ps = enumerateStrict
+        circ : Permutation 4
+        circ = circulate

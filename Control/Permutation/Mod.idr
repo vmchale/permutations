@@ -130,6 +130,16 @@ pi (FS j) FZ = FS j :: fill j
 pi FZ (FS k) = FS k :: fill k
 pi FZ FZ = neutral
 
+||| For S_4, (1234)
+export
+circulate : Permutation n
+circulate {n=Z} = Nil
+circulate {n=S Z} = FZ :: Nil
+circulate {n=S (S m)} = foldl (<+>) neutral pis
+  where
+    pis : List (Permutation (S (S m)))
+    pis {m} = zipWith pi (enumFromTo 0 (weaken $ natToFin m)) (enumFromTo 1 (natToFin (S m)))
+
 ||| swaps a permutation into a product of swaps.
 export
 swaps : Permutation n -> List (Permutation n)
