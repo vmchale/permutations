@@ -138,7 +138,7 @@ circulate {n=S Z} = FZ :: Nil
 circulate {n=S (S m)} = foldl (<+>) neutral pis
   where
     pis : List (Permutation (S (S m)))
-    pis {m} = zipWith pi (enumFromTo 0 (weaken $ natToFin m)) (enumFromTo 1 (natToFin (S m)))
+    pis = zipWith pi (enumFromTo 0 (weaken $ natToFin m)) (enumFromTo 1 (natToFin (S m)))
 
 ||| swaps a permutation into a product of swaps.
 export
