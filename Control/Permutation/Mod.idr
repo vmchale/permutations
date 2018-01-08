@@ -12,6 +12,15 @@ import Data.Nat.Parity
 
 %access public export
 
+mutual
+  even : Nat -> Bool
+  even Z = True
+  even (S k) = odd k
+
+  odd : Nat -> Bool
+  odd Z = False
+  odd (S k) = even k
+
 private
 natToFin : (n : Nat) -> Fin (S n)
 natToFin Z = FZ

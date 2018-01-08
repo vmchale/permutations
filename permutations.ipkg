@@ -18,5 +18,4 @@ modules = Control.Permutation,
           Control.Permutation.Arity,
           Data.Indexable,
           Data.Vect.Lazy,
-          Data.Nat.Parity,
           Data.Group
