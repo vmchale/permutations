@@ -58,9 +58,9 @@ compose (i :: p) p' = (index i (toVector p')) :: (compose p (delete i p'))
 export
 invert : Permutation n -> Permutation n
 invert Nil = Nil
-invert p@(i :: is) = (index i' (toVector p)) :: (delete i' p)
+invert p@(i :: is) = (index (i' p) (toVector p)) :: (delete (i' p) p)
   where
-    i' = index i (toVector p)
+    i' p = Data.Vect.index i (toVector p)
 
 implementation Show a => Show (Lazy a) where
   show (Delay x) = show x

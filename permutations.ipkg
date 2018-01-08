@@ -9,8 +9,6 @@ author = Vanessa McHale
 sourceloc  = git://git@github.com:vmchale/permutations.git
 bugtracker = http://www.github.com/vmchale/permutations/issues
 
-pkgs = contrib
-
 modules = Control.Permutation,
           Control.Permutation.Types,
           Control.Permutation.Mod,
