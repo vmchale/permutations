@@ -6,7 +6,6 @@ import Data.Vect
 import Control.Permutation.Types
 import Data.Vect
 import Data.Vect.Lazy
-import Data.Nat.Parity
 
 %default total
 
