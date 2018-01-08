@@ -14,5 +14,6 @@ modules = Control.Permutation.Types
         , Data.Group
         , Data.Indexable
         , Test.Spec
+        , Data.Nat.Parity
 
 tests = Test.Spec.specSuite
