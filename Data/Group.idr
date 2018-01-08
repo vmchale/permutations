@@ -11,7 +11,7 @@ interface (Monoid t) => Group t where
 ||| Stream of elements starting at some given element.
 generate : (Group g) => g -> Stream g
 generate g1 = h where
-  h = assert_total $ g1 :: map (<+> g1) h
+  h = assert_total $ neutral :: map (<+> g1) h
 
 ||| (Positive) integer exponentiation.
 exp : (Group g) => (n : Nat) -> g -> g

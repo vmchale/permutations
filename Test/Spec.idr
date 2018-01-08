@@ -10,11 +10,15 @@ specSuite : IO ()
 specSuite =
   spec $ do
     describe "circulate" $ do
-      it "should work" $ do
-        show circ `shouldBe` "(0123)"
+      it "should work (1/2)" $ do
+        show circ `shouldBe` "(01234)"
+      it "should work (2/2)" $ do
+        sigma circulate [0, 1, 2, 3, 4] `shouldBe` [1, 2, 3, 4, 0]
     describe "isEven" $ do
       it "should work" $ do
         map isEven ps `shouldBe` [False, True]
+      it "should work with exp" $ do
+        map (isEven . exp 2) ps `shouldBe` [True, True]
     describe "trivial" $ do
       it "should permute a vector" $
         toVector trivial `shouldBe` [0, 3, 2, 1]
@@ -51,5 +55,5 @@ specSuite =
         swap = pi FZ (FS 1)
         ps : Vect 2 (Permutation 2)
         ps = enumerateStrict
-        circ : Permutation 4
+        circ : Permutation 5
         circ = circulate
