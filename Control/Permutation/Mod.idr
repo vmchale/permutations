@@ -162,4 +162,4 @@ swaps {n=n@(S _)} p = go overlaps p
 ||| Test whether a permutation is even.
 export
 isEven : Permutation n -> Bool
-isEven = even . length . swaps -- TODO should this be a lazy list?
+isEven = even . length . swaps

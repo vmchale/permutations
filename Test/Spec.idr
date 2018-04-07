@@ -42,6 +42,9 @@ specSuite =
         inverse trivial `shouldBe` trivial
       it "should satisfy x⁻¹x=e" $
         inverse trivial <+> trivial `shouldBe` neutral
+    describe "monoid laws" $ do
+      it "should hold" $
+        neutral <+> circ' `shouldBe` circ'
         
         -- TODO property test: composing disjoint swaps should commute!
         -- Also associativity.
@@ -55,5 +58,7 @@ specSuite =
         swap = pi FZ (FS 1)
         ps : Vect 2 (Permutation 2)
         ps = enumerateStrict
+        circ' : Permutation 3
+        circ' = circulate
         circ : Permutation 5
         circ = circulate

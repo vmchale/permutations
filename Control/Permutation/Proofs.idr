@@ -1,6 +1,5 @@
 module Control.Permutation.Proofs
 
-import Control.Permutation.Types
 import Control.Permutation.Mod
 
 %access export
