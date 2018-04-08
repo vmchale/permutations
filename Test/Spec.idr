@@ -44,6 +44,8 @@ specSuite =
         inverse trivial <+> trivial `shouldBe` neutral
     describe "monoid laws" $ do
       it "should hold" $
+        neutral <+> x `shouldBe` x
+      it "should hold" $
         neutral <+> circSmall `shouldBe` circSmall
         
         -- TODO property test: composing disjoint swaps should commute!
@@ -60,5 +62,7 @@ specSuite =
         ps = enumerateStrict
         circSmall : Permutation 3
         circSmall = circulate
+        x : Permutation 3
+        x = pi (FS 1) (FZ)
         circ : Permutation 5
         circ = circulate

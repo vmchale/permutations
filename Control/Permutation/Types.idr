@@ -59,7 +59,7 @@ invert : Permutation n -> Permutation n
 invert Nil = Nil
 invert p@(i :: is) = (index (i' p) (toVector p)) :: (delete (i' p) p)
   where
-    i' p = Data.Vect.index i (toVector p)
+    i' p = index i (toVector p)
 
 implementation Show a => Show (Lazy a) where
   show (Delay x) = show x
