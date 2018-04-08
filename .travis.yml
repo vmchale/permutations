@@ -1,3 +1,29 @@
-language: haskell
+---
+sudo: false
+language: python
+cache:
+  directories:
+  - $HOME/.cabal
+  - $HOME/.ghc
+addons:
+  apt:
+    sources:
+    - hvr-ghc
+    packages:
+    - libgmp3-dev
+    - ghc-8.2.2
+    - cabal-install-head
+
+install:
+- export PATH=/opt/ghc/$GHCVER/bin:$PATH
+- export PATH=$HOME/.cabal/bin:$PATH
+- cabal update
+- cabal new-install idris --dependencies-only
+- travis_wait 30 cabal new-install idris
+- git clone https://github.com/pheymann/specdris
+- cd specdris/
+- idris --install specdris.ipkg
+
 script:
-  - exit 0
+- cd ../
+- idris --testpkg test.ipkg
