@@ -45,8 +45,8 @@ specSuite =
     describe "monoid laws" $ do
       it "should hold" $
         neutral <+> x `shouldBe` x
-      it "should hold" $
-        neutral <+> circSmall `shouldBe` circSmall
+      -- it "should hold" $
+      --   neutral <+> circSmall `shouldBe` circSmall
         
         -- TODO property test: composing disjoint swaps should commute!
         -- Also associativity.
