@@ -62,7 +62,6 @@ delete {n=S _} (FS i) (j :: p) = (either lifter id $ strengthen j) :: delete i p
     lifter (FS k) = k
     lifter FZ = FZ
 
--- 2 :: 0 :: 0
 private
 compose : Permutation n -> Permutation n -> Permutation n
 compose Nil p = p
@@ -71,9 +70,9 @@ compose (i :: p) p' = index i (indices p') :: compose p (delete i p')
 export
 invert : Permutation n -> Permutation n
 invert Nil = Nil
-invert p@(i :: is) = index (i' p) (toVector p) :: delete (i' p) p
+invert p@(i :: is) = index (i' p) (indices p) :: delete (i' p) p
   where
-    i' p = index i (toVector p)
+    i' p = index i (indices p)
 
 implementation Show a => Show (Lazy a) where
   show (Delay x) = show x

@@ -42,7 +42,7 @@ specSuite =
         inverse trivial `shouldBe` trivial
       it "should satisfy x⁻¹x=e" $
         inverse trivial <+> trivial `shouldBe` neutral
-    describe "monoid laws" $ do
+    describe "issue #2" $ do
       it "should hold" $
         neutral <+> circSmall `shouldBe` circSmall
         
