@@ -73,12 +73,6 @@ invert p@(i :: is) = index (i' p) (indices p) :: delete (i' p) p
   where
     i' p = index i (indices p)
 
-implementation Show a => Show (Lazy a) where
-  show (Delay x) = show x
-
-implementation Eq a => Eq (Lazy a) where
-  (==) (Delay x) (Delay y) = x == y
-
 implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
