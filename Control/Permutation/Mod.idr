@@ -58,13 +58,6 @@ combine {m} {n} fs xs = rewrite multCommutative m n in
     g : Vect m (a -> b) -> a -> Vect m b
     g fs x = fs <*> pure x
 
-||| All permutations, enumerated lazily
-export
-enumerate : LazyVect (factorial n) (Permutation n)
-enumerate {n=Z} = Nil :: Nil
-enumerate {n=S Z} = ((FZ :: Nil) :: Nil)
-enumerate {n=n@(S m)} = combineL (map (::) (lfiniteL m)) enumerate
-
 ||| All permutations of a certain order.
 export
 enumerateStrict : Vect (factorial n) (Permutation n)
@@ -149,7 +142,7 @@ circulate {n=S (S m)} = foldl (<+>) neutral pis
     pis : List (Permutation (S (S m)))
     pis = zipWith pi (enumFromTo 0 (weaken $ natToFin m)) (enumFromTo 1 (natToFin (S m)))
 
-||| swaps a permutation into a product of swaps.
+||| Factors a permutation into a product of swaps.
 export
 swaps : Permutation n -> List (Permutation n)
 swaps {n=Z} _ = []

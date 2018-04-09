@@ -13,5 +13,4 @@ modules = Control.Permutation,
           Control.Permutation.Types,
           Control.Permutation.Mod,
           Control.Permutation.Proofs,
-          Data.Vect.Lazy,
           Data.Group

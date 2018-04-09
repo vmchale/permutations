@@ -9,7 +9,6 @@ pkgs = specdris
 modules = Control.Permutation.Types
         , Control.Permutation
         , Control.Permutation.Proofs
-        , Data.Vect.Lazy
         , Data.Group
         , Test.Spec
 
