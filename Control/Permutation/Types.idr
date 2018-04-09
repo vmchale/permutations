@@ -43,6 +43,7 @@ toVector {n} p = sigma p (sequential n)
     sequential Z = []
     sequential (S k) = FZ :: map FS (sequential k)
 
+private
 indices : Permutation n -> Vect n (Fin n)
 indices [] = Nil
 indices (p :: ps) = p :: map (thin p) (indices ps)
