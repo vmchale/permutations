@@ -109,10 +109,6 @@ export
 order : Permutation (S n) -> Nat
 order = foldr lcm 1 . map length . cycles
 
-||| Alternate method of displaying a permutation.
-quickShow : Permutation n -> String
-quickShow = show . toVector
-
 private
 checkId : String -> String
 checkId "" = "id"
