@@ -25,7 +25,7 @@ id {n=S _} = FZ :: id
 
 ||| This is essentially a group action. Given a permutation, we apply it to a vector.
 sigma : Permutation n -> Vect n a -> Vect n a
-sigma [] [] = []
+sigma _ [] = []
 sigma (p::ps) (x::xs) = insert (sigma ps xs) p
   where
     insert : Vect n a -> Fin (S n) -> Vect (S n) a

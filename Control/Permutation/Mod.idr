@@ -113,8 +113,13 @@ order = foldr lcm 1 . map length . cycles
 quickShow : Permutation n -> String
 quickShow = show . toVector
 
+private
+checkId : String -> String
+checkId "" = "id"
+checkId x = x
+
 implementation Show (Permutation (S n)) where
-  show {n} p = concatMap (go n) (cycles p)
+  show {n} p = checkId (concatMap (go n) (cycles p))
     where
       go : (Show a) => Nat -> List a -> String
       go _ l@(_::_::_) = if n <= 9

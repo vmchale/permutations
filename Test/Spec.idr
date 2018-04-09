@@ -45,11 +45,11 @@ specSuite =
     describe "monoid laws" $ do
       it "should hold" $
         neutral <+> x `shouldBe` x
-      -- it "should hold" $
-      --   neutral <+> circSmall `shouldBe` circSmall
+      it "should hold" $
+        neutral <+> circSmall `shouldBe` circSmall
         
         -- TODO property test: composing disjoint swaps should commute!
-        -- Also associativity.
+        -- Also associativity. or better yet proofs?
   where trivial : Permutation 4
         trivial = pi (FS 0) (FS 2)
         disjoint : Permutation 4
@@ -63,6 +63,6 @@ specSuite =
         circSmall : Permutation 3
         circSmall = circulate
         x : Permutation 3
-        x = pi (FS 1) (FZ)
+        x = pi (FS 1) (FS 0)
         circ : Permutation 5
         circ = circulate
