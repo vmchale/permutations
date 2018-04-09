@@ -3,7 +3,6 @@ module Control.Permutation.Types
 import Data.List
 import Data.Vect
 import Data.Group
-import Data.Vect.Lazy
 
 %default total
 

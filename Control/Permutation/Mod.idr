@@ -5,7 +5,6 @@ import Data.List
 import Data.Vect
 import Control.Permutation.Types
 import Data.Vect
-import Data.Vect.Lazy
 
 %default total
 
@@ -35,21 +34,9 @@ finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
 finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
 
-private
-lfiniteL : (n : Nat) -> LazyVect (S n) (Fin (S n))
-lfiniteL Z = FZ :: Nil
-lfiniteL n@(S m) = natToFin n :: (map weaken $ lfiniteL m)
-
 factorial : Nat -> Nat
 factorial Z = S Z
 factorial (S k) = (S k) * factorial k
-
-combineL : LazyVect m (a -> b) -> LazyVect n a -> LazyVect (m * n) b
-combineL {m} {n} fs xs = rewrite multCommutative m n in
-                                 concat $ map (g fs) xs
-  where
-    g : LazyVect m (a -> b) -> a -> LazyVect m b
-    g fs x = fs <*> pure x
 
 combine : Vect m (a -> b) -> Vect n a -> Vect (m * n) b
 combine {m} {n} fs xs = rewrite multCommutative m n in
