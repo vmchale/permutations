@@ -12,4 +12,6 @@ modules = Control.Permutation.Types
         , Data.Group
         , Test.Spec
 
+sourcedir = src
+
 tests = Test.Spec.specSuite
