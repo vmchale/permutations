@@ -1,0 +1,20 @@
+[package]
+name = "vmchale/permutations"
+version = "0.2.0"
+authors = [ "Vanessa McHale" ]
+
+[dev_dependencies]
+"pheymann/specdris" = { git = "https://github.com/pheymann/specdris/" }
+
+[targets.lib]
+mods = [ "Control.Permutation"
+       , "Control.Permutation.Types"
+       , "Control.Permutation.Mod"
+       , "Control.Permutation.Proofs"
+       , "Data.Group"
+       ]
+
+[[targets.test]]
+path = "src"
+main = "Test.Spec.specSuite"
+idris_opts = [ "-p", "contrib"]
