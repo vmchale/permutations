@@ -1,3 +1,4 @@
+-- loosely based off Alyssa Carter's code
 module Control.Permutation.Mod
 
 import Prelude.Nat
