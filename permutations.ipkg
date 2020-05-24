@@ -1,16 +1,9 @@
 package permutations
 
-brief = "Type-safe operations with the permutation group."
-version = 0.2.0
-readme = README.md
-license = BSD3
-author = Vanessa McHale
-
-sourceloc  = git://git@github.com:vmchale/permutations.git
-bugtracker = http://www.github.com/vmchale/permutations/issues
-
 modules = Control.Permutation,
           Control.Permutation.Types,
           Control.Permutation.Mod,
           Control.Permutation.Proofs,
           Data.Group
+
+depends = base, prelude

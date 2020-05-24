@@ -1,8 +1,8 @@
 module Data.Group
 
-%default total
+import Data.Stream
 
-%access public export
+%default total
 
 ||| This extends 'Monoid' by defining an inverse for every element.
 interface (Monoid t) => Group t where
@@ -10,12 +10,11 @@ interface (Monoid t) => Group t where
 
 ||| Stream of elements starting at some given element.
 generate : (Group g) => g -> Stream g
-generate g1 = h where
-  h = assert_total $ neutral :: map (<+> g1) h
+generate g1 = neutral :: map (<+> g1) (generate g1)
 
 ||| (Positive) integer exponentiation.
 exp : (Group g) => (n : Nat) -> g -> g
-exp n g = (head . drop n) (generate g)
+exp n g = Data.Stream.head (drop n (generate g))
 
 ||| Whether a group element is idempotent
 idempotent : (Eq g, Semigroup g) => g -> Bool
