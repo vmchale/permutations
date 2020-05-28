@@ -10,6 +10,7 @@ import Data.Group
 infixr 7 :*
 
 ||| This is something like `Vector k a`, except we restrict ourselves to only 1,...,n for `Permutation n`.
+public export
 data Permutation : Nat -> Type where
   Nil : Permutation Z
   (:*) : Fin (S n) -> Permutation n -> Permutation (S n)
@@ -37,6 +38,7 @@ sigma {n=S _} (p:*ps) (x::xs) = insert (sigma ps xs) p
     insert Data.Vect.Nil _ = [x]
     insert (e::es) (FS k) = e :: insert es k
 
+export
 toVector : {n : Nat} -> Permutation n -> Vect n (Fin n)
 toVector {n} p = sigma p (sequential n)
   where
