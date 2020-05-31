@@ -22,10 +22,6 @@ id : Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :: id
 
-debug : Permutation n -> String
-debug Nil = "Nil"
-debug (p::ps) = show (finToNat p) ++ " :: " ++ (debug ps)
-
 ||| This is essentially a group action. Given a permutation, we apply it to a vector.
 sigma : Permutation n -> Vect n a -> Vect n a
 sigma _ [] = []
