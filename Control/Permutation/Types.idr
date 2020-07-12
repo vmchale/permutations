@@ -28,9 +28,9 @@ id {n=S _} = FZ :: id
 σ (p::ps) (x::xs) = ι x p (σ ps xs)
   where
     ι : a -> Fin (S n) -> Vect n a -> Vect (S n) a
-    ι x FZ l = x::l
-    ι x _ [] = [x]
-    ι x (FS k) (e::es) = e :: ι x k es
+    ι y FZ ys = y::ys
+    ι y _ [] = [y]
+    ι y (FS k) (z::zs) = z :: ι y k zs
 
 toVector : Permutation n -> Vect n (Fin n)
 toVector {n} p = σ p (sequential n)
