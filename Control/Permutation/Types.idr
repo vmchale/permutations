@@ -23,17 +23,17 @@ id {n=Z} = []
 id {n=S _} = FZ :: id
 
 ||| This is essentially a group action. Given a permutation, we apply it to a vector.
-sigma : Permutation n -> Vect n a -> Vect n a
-sigma _ [] = []
-sigma (p::ps) (x::xs) = insert (sigma ps xs) p
+σ : Permutation n -> Vect n a -> Vect n a
+σ _ [] = []
+σ (p::ps) (x::xs) = ι x p (σ ps xs)
   where
-    insert : Vect n a -> Fin (S n) -> Vect (S n) a
-    insert l FZ = x::l
-    insert [] _ = [x]
-    insert (e::es) (FS k) = e :: insert es k
+    ι : a -> Fin (S n) -> Vect n a -> Vect (S n) a
+    ι x FZ l = x::l
+    ι x _ [] = [x]
+    ι x (FS k) (e::es) = e :: ι x k es
 
 toVector : Permutation n -> Vect n (Fin n)
-toVector {n} p = sigma p (sequential n)
+toVector {n} p = σ p (sequential n)
   where
     sequential : (n : Nat) -> Vect n (Fin n)
     sequential Z = []
@@ -55,6 +55,7 @@ delete FZ (j :: p) = p
 delete {n=Z} (FS _)  _ = Nil
 delete {n=S _} (FS i) (j :: p) = (either lifter id $ strengthen j) :: delete i p
   where
+    lifter : Fin (S (S n)) -> Fin (S n)
     lifter (FS k) = k
     lifter FZ = FZ
 
