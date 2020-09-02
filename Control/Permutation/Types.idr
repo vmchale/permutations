@@ -80,15 +80,19 @@ invert p@(i :* is) = index (i' p) (indices p) :* delete (i' p) p
     i' : Permutation n -> Fin n
     i' p = index i (indices p)
 
+export
 implementation Show (Fin n) where
   show FZ = "0"
   show (FS k) = show $ (finToNat k) + 1
 
+export
 implementation {n : Nat} -> Semigroup (Permutation n) where
   (<+>) = compose
 
+export
 implementation {n : Nat} -> Monoid (Permutation n) where
   neutral = id
 
+export
 implementation {n : Nat} -> Group (Permutation n) where
   inverse = invert

@@ -48,7 +48,7 @@ export
 enumerateStrict : {n : Nat} -> Vect (factorial n) (Permutation n)
 enumerateStrict {n=Z} = Nil :: Nil
 enumerateStrict {n=S Z} = ((FZ :* Nil) :: Data.Vect.Nil)
-enumerateStrict {n=(S m)} = combine (map (::) (finiteL m)) enumerateStrict
+enumerateStrict {n=(S m)} = combine (map (:*) (finiteL m)) enumerateStrict
 
 ||| Show where an integer is sent.
 ||| @p A permutation
@@ -102,16 +102,16 @@ implementation {n : Nat} -> Show (Permutation (S n)) where
       go _ _ = ""
 
 private
-fill : Fin n -> Permutation n
+fill : {n : Nat} -> Fin n -> Permutation n
 fill FZ = neutral
-fill (FS k) = FS (zeros k) :: fill k
+fill (FS k) = FS (zeros k) :* fill k
   where zeros : Fin m -> Fin m
         zeros FZ = FZ
         zeros (FS _) = FZ
 
 ||| The permutation π_ij
 export
-pi : Fin n -> Fin n -> Permutation n
+pi : {n : Nat } -> Fin n -> Fin n -> Permutation n
 pi (FS j) (FS k) = FZ :* pi j k
 pi (FS j) FZ = FS j :* fill j
 pi FZ (FS k) = FS k :* fill k
@@ -133,8 +133,9 @@ swaps : {n : Nat} -> Permutation n -> List (Permutation n)
 swaps {n=Z} _ = []
 swaps {n=n@(S _)} p = go overlaps p
   where
-    go : (List (Fin (S n)) -> List (Permutation (S n))) -> Permutation (S n) -> List (Permutation (S n))
+    go : (List (Fin n) -> List (Permutation n)) -> Permutation n -> List (Permutation n)
     go f p = (>>= f) $ cycles p
+    overlaps : List (Fin n) -> List (Permutation n)
     overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
     overlaps x = []
 
