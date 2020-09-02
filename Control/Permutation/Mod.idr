@@ -78,14 +78,14 @@ finOrbit p {n} i = nub $ take (S n) (orbit p i)
 ||| pretty-printer.
 export
 cycles : {n : Nat} -> Permutation (S n) -> List (List (Fin (S n)))
-cycles p {n} = nubBy g . map (finOrbit p) . enumFromTo 0 $ (natToFin n)
+cycles p {n} = nubBy g . map (finOrbit p) . rangeFromTo 0 $ (natToFin n)
   where
     g : List (Fin (S n)) -> List (Fin (S n)) -> Bool
     g x y = and $ map (delay . flip elem y) x
 
 export
 order : {n : Nat} -> Permutation (S n) -> Nat
-order = foldr lcm 1 . map length . cycles
+order = assert_total $ foldr lcm 1 . map length . cycles
 
 private
 checkId : String -> String
@@ -125,7 +125,7 @@ circulate {n=S Z} = FZ :* Nil
 circulate {n=S (S m)} = foldl (<+>) neutral pis
   where
     pis : List (Permutation (S (S m)))
-    pis = zipWith pi (enumFromTo 0 (weaken $ natToFin m)) (enumFromTo 1 (natToFin (S m)))
+    pis = zipWith pi (rangeFromTo 0 (weaken $ natToFin m)) (rangeFromTo 1 (natToFin (S m)))
 
 ||| Factors a permutation into a product of swaps.
 export
