@@ -12,7 +12,7 @@ specSuite =
       it "should work (1/2)" $ do
         show circ `shouldBe` "(01234)"
       it "should work (2/2)" $ do
-        σ circulate [0, 1, 2, 3, 4] `shouldBe` [1, 2, 3, 4, 0]
+        sigma circulate [0, 1, 2, 3, 4] `shouldBe` [1, 2, 3, 4, 0]
     describe "isEven" $ do
       it "should work" $ do
         map isEven ps `shouldBe` [False, True]

@@ -23,17 +23,17 @@ id {n=Z} = []
 id {n=S _} = FZ :: id
 
 ||| This is essentially a group action. Given a permutation, we apply it to a vector.
-σ : Permutation n -> Vect n a -> Vect n a
-σ _ [] = []
-σ (p::ps) (x::xs) = ι x p (σ ps xs)
+sigma : Permutation n -> Vect n a -> Vect n a
+sigma _ [] = []
+sigma (p::ps) (x::xs) = insert x p (sigma ps xs)
   where
-    ι : a -> Fin (S n) -> Vect n a -> Vect (S n) a
-    ι y FZ ys = y::ys
-    ι y _ [] = [y]
-    ι y (FS k) (z::zs) = z :: ι y k zs
+    insert : a -> Fin (S n) -> Vect n a -> Vect (S n) a
+    insert y FZ ys = y::ys
+    insert y _ [] = [y]
+    insert y (FS k) (z::zs) = z :: insert y k zs
 
 toVector : Permutation n -> Vect n (Fin n)
-toVector {n} p = σ p (sequential n)
+toVector {n} p = sigma p (sequential n)
   where
     sequential : (n : Nat) -> Vect n (Fin n)
     sequential Z = []
@@ -42,7 +42,7 @@ toVector {n} p = σ p (sequential n)
 private
 indices : Permutation n -> Vect n (Fin n)
 indices [] = Nil
-indices (p :: ps) = p :: map (thin p) (indices ps)
+indices (p::ps) = p :: map (thin p) (indices ps)
   where
     thin : Fin (S n) -> Fin n -> Fin (S n)
     thin FZ i = FS i
@@ -51,8 +51,8 @@ indices (p :: ps) = p :: map (thin p) (indices ps)
 
 private
 delete : Fin (S n) -> Permutation (S n) -> Permutation n
-delete FZ (j :: p) = p
-delete {n=Z} (FS _)  _ = Nil
+delete FZ (_::p) = p
+delete {n=Z} _ _ = Nil
 delete {n=S _} (FS i) (j :: p) = (either lifter id $ strengthen j) :: delete i p
   where
     lifter : Fin (S (S n)) -> Fin (S n)
@@ -63,7 +63,7 @@ delete {n=S _} (FS i) (j :: p) = (either lifter id $ strengthen j) :: delete i p
 private
 compose : Permutation n -> Permutation n -> Permutation n
 compose Nil p = p
-compose (i :: p) p' = index i (indices p') :: compose p (delete i p')
+compose (i::p) p' = index i (indices p') :: compose p (delete i p')
 
 private
 invert : Permutation n -> Permutation n
