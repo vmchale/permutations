@@ -8,14 +8,11 @@ module Data.Group
 interface (Monoid t) => Group t where
   inverse : t -> t
 
-||| Stream of elements starting at some given element.
-generate : (Group g) => g -> Stream g
-generate g1 = h where
-  h = assert_total $ neutral :: map (<+> g1) h
-
 ||| (Positive) integer exponentiation.
 exp : (Group g) => (n : Nat) -> g -> g
-exp n g = (head . drop n) (generate g)
+exp n g = (head . drop n) (generate g) where
+  generate g = h where
+    h = assert_total $ neutral :: map (<+> g) h
 
 ||| Whether a group element is idempotent
 idempotent : (Eq g, Semigroup g) => g -> Bool
