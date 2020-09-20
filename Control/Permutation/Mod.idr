@@ -5,7 +5,6 @@ import Prelude.Nat
 import Data.List
 import Data.Vect
 import Control.Permutation.Types
-import Data.Vect
 
 %default total
 
