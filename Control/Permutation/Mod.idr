@@ -46,12 +46,12 @@ combine {m} {n} fs xs = rewrite multCommutative m n in
     g : Vect m (a -> b) -> a -> Vect m b
     g fs x = fs <*> pure x
 
-||| All permutations of a certain order.
+||| All permutations
 export
 enumerateStrict : Vect (factorial n) (Permutation n)
 enumerateStrict {n=Z} = Nil :: Nil
 enumerateStrict {n=S Z} = ((FZ :: Nil) :: Nil)
-enumerateStrict {n=n@(S m)} = combine (map (::) (finiteL m)) enumerateStrict
+enumerateStrict {n=(S m)} = combine (map (::) (finiteL m)) enumerateStrict
 
 ||| Show where an integer is sent.
 ||| @p A permutation
