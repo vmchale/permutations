@@ -22,8 +22,13 @@ natToFin' : (n : Nat) -> Fin (S n)
 natToFin' Z = FZ
 natToFin' (S k) = FS (natToFin' k)
 
-implementation Range (Fin (S n)) where
-  rangeFromTo m n = map natToFin' (rangeFromTo (finToNat m) (finToNat n))
+rangeFromZero : Fin n -> List (Fin n)
+rangeFromZero FZ = [FZ]
+rangeFromZero m@(FS k) = m :: map weaken (rangeFromZero k)
+
+rangeFromOne : Fin (S n) -> List (Fin (S n))
+rangeFromOne FZ = Nil
+rangeFromOne m@(FS k) = m :: map weaken (rangeFromZero k)
 
 ||| This permutation reverses a vector completely
 reverse : {n : Nat} -> Permutation n
@@ -82,7 +87,7 @@ finOrbit p {n} i = nub $ take (S n) (orbit p i)
 ||| pretty-printer.
 export
 cycles : {n : Nat} -> Permutation (S n) -> List (List (Fin (S n)))
-cycles p {n} = nubBy g . map (finOrbit p) . rangeFromTo 0 $ (natToFin' n)
+cycles p {n} = nubBy g . map (finOrbit p) . rangeFromZero $ (natToFin' n)
   where
     g : List (Fin (S n)) -> List (Fin (S n)) -> Bool
     g x y = and $ map (delay . flip elem y) x
@@ -129,7 +134,7 @@ circulate {n=S Z} = FZ :* Nil
 circulate {n=S (S m)} = foldl (<+>) neutral pis
   where
     pis : List (Permutation (S (S m)))
-    pis = zipWith piPerm (rangeFromTo 0 (weaken $ natToFin' m)) (rangeFromTo 1 (natToFin' (S m)))
+    pis = zipWith piPerm (rangeFromZero (weaken $ natToFin' m)) (rangeFromOne (natToFin' (S m)))
 
 ||| Factors a permutation into a product of swaps.
 export
