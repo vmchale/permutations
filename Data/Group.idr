@@ -9,12 +9,12 @@ interface (Monoid t) => Group t where
 
 ||| Stream of elements starting at some given element.
 public export
-generate : (Group g) => g -> Stream g
+generate : (Monoid g) => g -> Stream g
 generate g1 = neutral :: map (<+> g1) (generate g1)
 
 ||| (Positive) integer exponentiation.
 public export
-exp : (Group g) => (n : Nat) -> g -> g
+exp : (Monoid g) => (n : Nat) -> g -> g
 exp n g = Data.Stream.head (drop n (generate g))
 
 ||| Whether a group element is idempotent
