@@ -18,9 +18,12 @@ mutual
   odd (S k) = even k
 
 private
-natToFin : (n : Nat) -> Fin (S n)
-natToFin Z = FZ
-natToFin (S k) = FS (natToFin k)
+natToFin' : (n : Nat) -> Fin (S n)
+natToFin' Z = FZ
+natToFin' (S k) = FS (natToFin' k)
+
+implementation Range (Fin (S n)) where
+  rangeFromTo m n = map natToFin' (rangeFromTo (finToNat m) (finToNat n))
 
 ||| This permutation reverses a vector completely
 reverse : {n : Nat} -> Permutation n
@@ -30,8 +33,9 @@ reverse {n=S _} = last :* reverse
 private
 finiteL : (n : Nat) -> Vect (S n) (Fin (S n))
 finiteL Z = FZ :: Nil
-finiteL n@(S m) = natToFin n :: (map weaken $ finiteL m)
+finiteL n@(S m) = natToFin' n :: (map weaken $ finiteL m)
 
+public export
 factorial : Nat -> Nat
 factorial Z = S Z
 factorial (S k) = (S k) * factorial k
@@ -78,7 +82,7 @@ finOrbit p {n} i = nub $ take (S n) (orbit p i)
 ||| pretty-printer.
 export
 cycles : {n : Nat} -> Permutation (S n) -> List (List (Fin (S n)))
-cycles p {n} = nubBy g . map (finOrbit p) . rangeFromTo 0 $ (natToFin n)
+cycles p {n} = nubBy g . map (finOrbit p) . rangeFromTo 0 $ (natToFin' n)
   where
     g : List (Fin (S n)) -> List (Fin (S n)) -> Bool
     g x y = and $ map (delay . flip elem y) x
@@ -111,11 +115,11 @@ fill (FS k) = FS (zeros k) :* fill k
 
 ||| The permutation π_ij
 export
-pi : {n : Nat } -> Fin n -> Fin n -> Permutation n
-pi (FS j) (FS k) = FZ :* pi j k
-pi (FS j) FZ = FS j :* fill j
-pi FZ (FS k) = FS k :* fill k
-pi FZ FZ = neutral
+piPerm : {n : Nat } -> Fin n -> Fin n -> Permutation n
+piPerm (FS j) (FS k) = FZ :* piPerm j k
+piPerm (FS j) FZ = FS j :* fill j
+piPerm FZ (FS k) = FS k :* fill k
+piPerm FZ FZ = neutral
 
 ||| For S_4, (1234)
 export
@@ -125,7 +129,7 @@ circulate {n=S Z} = FZ :* Nil
 circulate {n=S (S m)} = foldl (<+>) neutral pis
   where
     pis : List (Permutation (S (S m)))
-    pis = zipWith pi (rangeFromTo 0 (weaken $ natToFin m)) (rangeFromTo 1 (natToFin (S m)))
+    pis = zipWith piPerm (rangeFromTo 0 (weaken $ natToFin' m)) (rangeFromTo 1 (natToFin' (S m)))
 
 ||| Factors a permutation into a product of swaps.
 export
@@ -136,7 +140,7 @@ swaps {n=n@(S _)} p = go overlaps p
     go : (List (Fin n) -> List (Permutation n)) -> Permutation n -> List (Permutation n)
     go f p = (>>= f) $ cycles p
     overlaps : List (Fin n) -> List (Permutation n)
-    overlaps (x::xs@(y::ys)) = pi x y :: overlaps xs
+    overlaps (x::xs@(y::ys)) = piPerm x y :: overlaps xs
     overlaps x = []
 
 ||| Test whether a permutation is even.
