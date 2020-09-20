@@ -9,7 +9,7 @@ interface (Monoid t) => Group t where
   inverse : t -> t
 
 ||| (Positive) integer exponentiation.
-exp : (Group g) => (n : Nat) -> g -> g
+exp : (Monoid g) => (n : Nat) -> g -> g
 exp n g = (head . drop n) (generate g) where
   generate g = h where
     h = assert_total $ neutral :: map (<+> g) h
