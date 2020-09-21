@@ -24,6 +24,7 @@ id : {n : Nat} -> Permutation n
 id {n=Z} = []
 id {n=S _} = FZ :* id
 
+export
 debug : Permutation n -> String
 debug Nil = "Nil"
 debug (p:*ps) = show (finToNat p) ++ " :* " ++ (debug ps)
