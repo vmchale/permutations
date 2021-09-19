@@ -61,7 +61,7 @@ private
 delete : {n : Nat} -> Fin (S n) -> Permutation (S n) -> Permutation n
 delete FZ (j :* p) = p
 delete {n=Z} (FS _)  _ = Nil
-delete {n=S _} (FS i) (j :* p) = (either lifter id $ strengthen j) :* delete i p
+delete {n=S _} (FS i) (j :* p) = fromMaybe (lifter j) (strengthen j) :* delete i p
   where
     lifter : {n : Nat} -> Fin (S n) -> Fin n
     lifter {n=Z} _ = ?hole
@@ -80,11 +80,6 @@ invert p@(i :* is) = index (i' p) (indices p) :* delete (i' p) p
   where
     i' : Permutation n -> Fin n
     i' p = index i (indices p)
-
-export
-implementation Show (Fin n) where
-  show FZ = "0"
-  show (FS k) = show $ (finToNat k) + 1
 
 export
 implementation {n : Nat} -> Semigroup (Permutation n) where

@@ -104,7 +104,7 @@ checkId x = x
 implementation {n : Nat} -> Show (Permutation (S n)) where
   show {n} p = checkId (concatMap (go n) (cycles p))
     where
-      go : (Show a) => Nat -> List a -> String
+      go : Nat -> List (Fin (S n)) -> String
       go _ l@(_::_::_) = if n <= 9
         then "(" ++ concatMap show l ++ ")"
         else "(" ++ concat ((intersperse "," . map show) l) ++ ")"

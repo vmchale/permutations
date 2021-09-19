@@ -15,7 +15,7 @@ generate g1 = neutral :: map (<+> g1) (generate g1)
 ||| (Positive) integer exponentiation.
 public export
 exp : (Monoid g) => (n : Nat) -> g -> g
-exp n g = Data.Stream.head (drop n (generate g))
+exp n g = Prelude.head (drop n (generate g))
 
 ||| Whether a group element is idempotent
 public export
