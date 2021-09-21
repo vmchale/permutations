@@ -1,20 +1,58 @@
-<!DOCTYPE HTML>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>IdrisDoc: Data.Group</title><link type="text/css" rel="stylesheet" href="../styles.css"></head><body class="namespace"><div class="wrapper"><header><strong>IdrisDoc</strong>: Data.Group<nav><a href="../index.html">Index</a></nav></header><div class="container"><h1>Data.Group</h1><dl class="decls"><dt id="Data.Group.idempotent"><span class="name function" title="Data.Group.idempotent">idempotent</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Interfaces.Eq" href="Prelude.Interfaces.html#Prelude.Interfaces.Eq">Eq</a> <span class="implicit boundvar" title="">g</span> =>
-<a class="type" title="Prelude.Algebra.Semigroup" href="Prelude.Algebra.html#Prelude.Algebra.Semigroup">Semigroup</a> <span class="implicit boundvar" title="">g</span> =>
-<span class="implicit boundvar" title="">g</span> ->
-<a class="type" title="Prelude.Bool.Bool" href="Prelude.Bool.html#Prelude.Bool.Bool">Bool</a></span></dt><dd><p>Whether a group element is idempotent</p>
-</dd><dt id="Data.Group.generate"><span class="name function" title="Data.Group.generate">generate</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Data.Group.Group" href="Data.Group.html#Data.Group.Group">Group</a> <span class="implicit boundvar" title="">g</span> =>
-<span class="implicit boundvar" title="">g</span> ->
-<a class="type" title="Prelude.Stream.Stream" href="Prelude.Stream.html#Prelude.Stream.Stream">Stream</a> <span class="implicit boundvar" title="">g</span></span></dt><dd><p>Stream of elements starting at some given element.</p>
-</dd><dt id="Data.Group.exp"><span class="name function" title="Data.Group.exp">exp</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Data.Group.Group" href="Data.Group.html#Data.Group.Group">Group</a> <span class="implicit boundvar" title="">g</span> =>
-(<span class="boundvar" title="">n</span> : <a class="type" title="Prelude.Nat.Nat" href="Prelude.Nat.html#Prelude.Nat.Nat">Nat</a>) ->
-<span class="implicit boundvar" title="">g</span> ->
-<span class="implicit boundvar" title="">g</span></span></dt><dd><p>(Positive) integer exponentiation.</p>
-</dd><dt id="Data.Group.commutator"><span class="name function" title="Data.Group.commutator">commutator</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Data.Group.Group" href="Data.Group.html#Data.Group.Group">Group</a> <span class="implicit boundvar" title="">g</span> =>
-<span class="implicit boundvar" title="">g</span> ->
-<span class="implicit boundvar" title="">g</span> ->
-<span class="implicit boundvar" title="">g</span></span></dt><dd><p>Commutator of two elements.</p>
-</dd><dt id="Data.Group.Group"><span class="word">interface&nbsp;</span><span class="name type" title="Data.Group.Group">Group</span><span class="signature">&nbsp;</span></dt><dd><p>This extends 'Monoid' by defining an inverse for every element.</p>
-<dl class="decls"><dt id="Data.Group.inverse"><span class="name function" title="Data.Group.inverse">inverse</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Data.Group.Group" href="Data.Group.html#Data.Group.Group">Group</a> <span class="implicit boundvar" title="">t</span> =>
-<span class="implicit boundvar" title="">t</span> ->
-<span class="implicit boundvar" title="">t</span></span></dt><dd></dd></dl></dd></dl></div></div><footer>Produced by IdrisDoc version 1.0</footer></body></html>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Data.Group</title>
+  <link rel="stylesheet" type="text/css" id="preferredStyle" href="../default.css">
+  <script>
+    /* Updates the stylesheet to use the preferred one.
+       Note that we set the link to root ++ sourceLoc because the config
+       is shared across the whole website, so the root may differ from
+       page to page.
+    */
+    function setStyleSource (sourceLoc) {
+      document.getElementById("preferredStyle").href = "../" + sourceLoc + ".css";
+      document.getElementById("selectPreferredStyle").value = sourceLoc;
+    }
+    /* Initialises the preferred style sheet:
+       1. if there is a stored value then use that
+          otherwise select the default
+       2. set both the css link href & the drop down menu selected option
+    */
+    function initStyleSource () {
+      var preferredStyle = localStorage.getItem("stylefile");
+      if (preferredStyle !== null) {
+        setStyleSource(preferredStyle);
+      } else {
+        setStyleSource("default");
+      };
+    }
+    function saveStyleSource (preferredStyle) {
+      localStorage.stylefile = preferredStyle;
+    }
+    </script>
+</head>
+<body class="namespace">
+<header>
+  <strong>Idris2Doc</strong> : Data.Group
+  <nav><a href="../index.html">Index</a>
+  <select id="selectPreferredStyle">
+    <option value="default">Default</option>
+<option value="alternative">Alternative</option>
+<option value="blackandwhite">Black & White</option>
+
+  </select>
+  </nav>
+  <script>
+  /* We start by initialising the style source */
+  initStyleSource();
+  /* This listens for changes on the drop down menu and updates the
+     css used for the current page when a selection is made.
+  */
+  document.getElementById("selectPreferredStyle").addEventListener("change", function(){
+    var selected = this.options[this.selectedIndex].value; /* the option chosen */
+    setStyleSource (selected);
+    saveStyleSource (selected);
+  });
+</script>
+</header>
+<div class="container"><div id="moduleHeader"><h1>Data.Group</h1><pre></pre></div><dl class="decls"><dt id="Data.Group.Group"><!-- ann ignored START -->interface<!-- ann END -->&ensp;<a class="type" href="Data.Group.html#Data.Group.Group"><span class="name type">Group</span></a>&ensp;:&ensp;<span class="name type">Type</span>&ensp;-&gt;&ensp;<span class="name type">Type</span></dt><dd><pre>  This&ensp;extends&ensp;&apos;Monoid&apos;&ensp;by&ensp;defining&ensp;an&ensp;inverse&ensp;for&ensp;every&ensp;element.</pre><br>  <b>Parameters</b>:&ensp;t<br><b>Constraints</b>:&ensp;Monoid t<br><b>Methods</b>:<br><dl class="decls">  <dt id="Data.Group.inverse"><a class="type" href="Data.Group.html#Data.Group.inverse"><span class="name function">inverse</span></a>&ensp;:&ensp;<!-- ann ignored START -->t<!-- ann END -->&ensp;-&gt;&ensp;<!-- ann ignored START -->t<!-- ann END --></dt></dl><br><b>Implementation</b>:&ensp;<dl class="decls"><dt id="$resolved2444"><a class="type" href="Data.Group.html#Data.Group.Group"><span class="name type">Group</span></a>&ensp;(<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->)</dt></dl></dd><dt id="Data.Group.commutator"><a class="type" href="Data.Group.html#Data.Group.commutator"><span class="name function">commutator</span></a>&ensp;:&ensp;<a class="type" href="Data.Group.html#Data.Group.Group"><span class="name type">Group</span></a>&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;=&gt;&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;-&gt;&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;-&gt;&ensp;<!-- ann ignored START -->g<!-- ann END --></dt><dd><pre>  Commutator&ensp;of&ensp;two&ensp;elements.</pre><br>  <b>Totality</b>:&ensp;total</dd><dt id="Data.Group.exp"><a class="type" href="Data.Group.html#Data.Group.exp"><span class="name function">exp</span></a>&ensp;:&ensp;<span class="type resolved" title="Prelude.Interfaces.Monoid"><span class="name type">Monoid</span></span>&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;=&gt;&ensp;<span class="type resolved" title="Prelude.Types.Nat"><span class="name type">Nat</span></span>&ensp;-&gt;&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;-&gt;&ensp;<!-- ann ignored START -->g<!-- ann END --></dt><dd><pre>  (Positive)&ensp;integer&ensp;exponentiation.</pre><br>  </dd><dt id="Data.Group.generate"><a class="type" href="Data.Group.html#Data.Group.generate"><span class="name function">generate</span></a>&ensp;:&ensp;<span class="type resolved" title="Prelude.Interfaces.Monoid"><span class="name type">Monoid</span></span>&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;=&gt;&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;-&gt;&ensp;<span class="type resolved" title="Prelude.Types.Stream.Stream"><span class="name type">Stream</span></span>&ensp;<!-- ann ignored START -->g<!-- ann END --></dt><dd><pre>  Stream&ensp;of&ensp;elements&ensp;starting&ensp;at&ensp;some&ensp;given&ensp;element.</pre><br>  </dd><dt id="Data.Group.idempotent"><a class="type" href="Data.Group.html#Data.Group.idempotent"><span class="name function">idempotent</span></a>&ensp;:&ensp;(<span class="type resolved" title="Prelude.EqOrd.Eq"><span class="name type">Eq</span></span>&ensp;<!-- ann ignored START -->g<!-- ann END -->,&ensp;<span class="type resolved" title="Prelude.Interfaces.Semigroup"><span class="name type">Semigroup</span></span>&ensp;<!-- ann ignored START -->g<!-- ann END -->)&ensp;=&gt;&ensp;<!-- ann ignored START -->g<!-- ann END -->&ensp;-&gt;&ensp;<span class="type resolved" title="Prelude.Basics.Bool"><span class="name type">Bool</span></span></dt><dd><pre>  Whether&ensp;a&ensp;group&ensp;element&ensp;is&ensp;idempotent</pre><br>  <b>Totality</b>:&ensp;total</dd><dt id="Data.Group.inverse"><a class="type" href="Data.Group.html#Data.Group.inverse"><span class="name function">inverse</span></a>&ensp;:&ensp;<a class="type" href="Data.Group.html#Data.Group.Group"><span class="name type">Group</span></a>&ensp;<!-- ann ignored START -->t<!-- ann END -->&ensp;=&gt;&ensp;<!-- ann ignored START -->t<!-- ann END -->&ensp;-&gt;&ensp;<!-- ann ignored START -->t<!-- ann END --></dt><dd>  </dd></dl></div><footer>Produced by Idris 2 version 0.5.1</footer></body></html>

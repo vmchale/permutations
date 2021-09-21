@@ -1,5 +1,58 @@
-<!DOCTYPE HTML>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>IdrisDoc: Control.Permutation.Proofs</title><link type="text/css" rel="stylesheet" href="../styles.css"></head><body class="namespace"><div class="wrapper"><header><strong>IdrisDoc</strong>: Control.Permutation.Proofs<nav><a href="../index.html">Index</a></nav></header><div class="container"><h1>Control.Permutation.Proofs</h1><dl class="decls"><dt id="Control.Permutation.Proofs.factorialLTE"><span class="name function" title="Control.Permutation.Proofs.factorialLTE">factorialLTE</span><span class="word">&nbsp;:&nbsp;</span><span class="signature">(<span class="boundvar" title="">n</span> : <a class="type" title="Prelude.Nat.Nat" href="Prelude.Nat.html#Prelude.Nat.Nat">Nat</a>) ->
-<a class="type" title="Prelude.Nat.LTE" href="Prelude.Nat.html#Prelude.Nat.LTE">LTE</a> (<a class="function" title="Prelude.Interfaces.fromInteger" href="Prelude.Interfaces.html#Prelude.Interfaces.fromInteger">fromInteger</a> <span class="data" title="1">1</span>)
-(<a class="function" title="Control.Permutation.Mod.factorial" href="Control.Permutation.Mod.html#Control.Permutation.Mod.factorial">factorial</a> <span class="boundvar" title="">n</span>)</span></dt><dd><p>Proof that n! &gt;= 1</p>
-</dd></dl></div></div><footer>Produced by IdrisDoc version 1.0</footer></body></html>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Control.Permutation.Proofs</title>
+  <link rel="stylesheet" type="text/css" id="preferredStyle" href="../default.css">
+  <script>
+    /* Updates the stylesheet to use the preferred one.
+       Note that we set the link to root ++ sourceLoc because the config
+       is shared across the whole website, so the root may differ from
+       page to page.
+    */
+    function setStyleSource (sourceLoc) {
+      document.getElementById("preferredStyle").href = "../" + sourceLoc + ".css";
+      document.getElementById("selectPreferredStyle").value = sourceLoc;
+    }
+    /* Initialises the preferred style sheet:
+       1. if there is a stored value then use that
+          otherwise select the default
+       2. set both the css link href & the drop down menu selected option
+    */
+    function initStyleSource () {
+      var preferredStyle = localStorage.getItem("stylefile");
+      if (preferredStyle !== null) {
+        setStyleSource(preferredStyle);
+      } else {
+        setStyleSource("default");
+      };
+    }
+    function saveStyleSource (preferredStyle) {
+      localStorage.stylefile = preferredStyle;
+    }
+    </script>
+</head>
+<body class="namespace">
+<header>
+  <strong>Idris2Doc</strong> : Control.Permutation.Proofs
+  <nav><a href="../index.html">Index</a>
+  <select id="selectPreferredStyle">
+    <option value="default">Default</option>
+<option value="alternative">Alternative</option>
+<option value="blackandwhite">Black & White</option>
+
+  </select>
+  </nav>
+  <script>
+  /* We start by initialising the style source */
+  initStyleSource();
+  /* This listens for changes on the drop down menu and updates the
+     css used for the current page when a selection is made.
+  */
+  document.getElementById("selectPreferredStyle").addEventListener("change", function(){
+    var selected = this.options[this.selectedIndex].value; /* the option chosen */
+    setStyleSource (selected);
+    saveStyleSource (selected);
+  });
+</script>
+</header>
+<div class="container"><div id="moduleHeader"><h1>Control.Permutation.Proofs</h1><pre></pre></div><dl class="decls"><dt id="Control.Permutation.Proofs.factorialIncr"><a class="type" href="Control.Permutation.Proofs.html#Control.Permutation.Proofs.factorialIncr"><span class="name function">factorialIncr</span></a>&ensp;:&ensp;(<!-- ann ignored START -->n<!-- ann END -->&ensp;:&ensp;<span class="type resolved" title="Prelude.Types.Nat"><span class="name type">Nat</span></span>)&ensp;-&gt;&ensp;<span class="implicit"><span class="name type">LTE</span></span>&ensp;(<a class="type" href="Control.Permutation.Mod.html#Control.Permutation.Mod.factorial"><span class="name function">factorial</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->)&ensp;(<a class="type" href="Control.Permutation.Mod.html#Control.Permutation.Mod.factorial"><span class="name function">factorial</span></a>&ensp;(<span class="type resolved" title="Prelude.Types.S"><span class="name constructor">S</span></span>&ensp;<!-- ann ignored START -->n<!-- ann END -->))</dt><dd><pre>  Proof&ensp;that&ensp;(n&ensp;+&ensp;1)!&ensp;&gt;=&ensp;n!</pre><br>  </dd><dt id="Control.Permutation.Proofs.factorialLTE"><a class="type" href="Control.Permutation.Proofs.html#Control.Permutation.Proofs.factorialLTE"><span class="name function">factorialLTE</span></a>&ensp;:&ensp;(<!-- ann ignored START -->n<!-- ann END -->&ensp;:&ensp;<span class="type resolved" title="Prelude.Types.Nat"><span class="name type">Nat</span></span>)&ensp;-&gt;&ensp;<span class="implicit"><span class="name type">LTE</span></span>&ensp;<span class="name constructor">1</span>&ensp;(<a class="type" href="Control.Permutation.Mod.html#Control.Permutation.Mod.factorial"><span class="name function">factorial</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->)</dt><dd><pre>  Proof&ensp;that&ensp;n!&ensp;&gt;=&ensp;1</pre><br>  </dd></dl></div><footer>Produced by Idris 2 version 0.5.1</footer></body></html>

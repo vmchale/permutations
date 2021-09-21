@@ -1,15 +1,58 @@
-<!DOCTYPE HTML>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>IdrisDoc: Control.Permutation.Types</title><link type="text/css" rel="stylesheet" href="../styles.css"></head><body class="namespace"><div class="wrapper"><header><strong>IdrisDoc</strong>: Control.Permutation.Types<nav><a href="../index.html">Index</a></nav></header><div class="container"><h1>Control.Permutation.Types</h1><dl class="decls"><dt id="Control.Permutation.Types.toVector"><span class="name function" title="Control.Permutation.Types.toVector">toVector</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span> ->
-<a class="type" title="Data.Vect.Vect" href="Data.Vect.html#Data.Vect.Vect">Vect</a> <span class="implicit boundvar" title="">n</span>
-(<a class="type" title="Data.Fin.Fin" href="Data.Fin.html#Data.Fin.Fin">Fin</a> <span class="implicit boundvar" title="">n</span>)</span></dt><dd></dd><dt id="Control.Permutation.Types.sigma"><span class="name function" title="Control.Permutation.Types.sigma">sigma</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span> ->
-<a class="type" title="Data.Vect.Vect" href="Data.Vect.html#Data.Vect.Vect">Vect</a> <span class="implicit boundvar" title="">n</span>
-<span class="implicit boundvar" title="">a</span> ->
-<a class="type" title="Data.Vect.Vect" href="Data.Vect.html#Data.Vect.Vect">Vect</a> <span class="implicit boundvar" title="">n</span>
-<span class="implicit boundvar" title="">a</span></span></dt><dd><p>This is essentially a group action. Given a permutation, we apply it to a vector.</p>
-</dd><dt id="Control.Permutation.Types.invert"><span class="name function" title="Control.Permutation.Types.invert">invert</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span> ->
-<a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span></span></dt><dd></dd><dt id="Control.Permutation.Types.debug"><span class="name function" title="Control.Permutation.Types.debug">debug</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span> ->
-<span class="type" title="String">String</span></span></dt><dd></dd><dt id="Control.Permutation.Types.Permutation"><span class="word">data&nbsp;</span><span class="name type" title="Control.Permutation.Types.Permutation">Permutation</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Nat.Nat" href="Prelude.Nat.html#Prelude.Nat.Nat">Nat</a> ->
-<span class="type" title="Type">Type</span></span></dt><dd><p>This is something like <code>Vector k a</code>, except we restrict ourselves to only 1,...,n for <code>Permutation n</code>.</p>
-<dl class="decls"><dt id="Control.Permutation.Types.Nil"><span class="name constructor" title="Control.Permutation.Types.Nil">Nil</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="data" title="0">0</span></span></dt><dd></dd><dt id="Control.Permutation.Types.::"><span class="name constructor" title="Control.Permutation.Types.::">(::)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Data.Fin.Fin" href="Data.Fin.html#Data.Fin.Fin">Fin</a> (<a class="constructor" title="Prelude.Nat.S" href="Prelude.Nat.html#Prelude.Nat.S">S</a> <span class="implicit boundvar" title="">n</span>) ->
-<a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> <span class="implicit boundvar" title="">n</span> ->
-<a class="type" title="Control.Permutation.Types.Permutation" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation">Permutation</a> (<a class="constructor" title="Prelude.Nat.S" href="Prelude.Nat.html#Prelude.Nat.S">S</a> <span class="implicit boundvar" title="">n</span>)</span></dt><dd><dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixr 7">Left associative, precedence 7</dd></dl></dd></dl></dd></dl></div></div><footer>Produced by IdrisDoc version 1.0</footer></body></html>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Control.Permutation.Types</title>
+  <link rel="stylesheet" type="text/css" id="preferredStyle" href="../default.css">
+  <script>
+    /* Updates the stylesheet to use the preferred one.
+       Note that we set the link to root ++ sourceLoc because the config
+       is shared across the whole website, so the root may differ from
+       page to page.
+    */
+    function setStyleSource (sourceLoc) {
+      document.getElementById("preferredStyle").href = "../" + sourceLoc + ".css";
+      document.getElementById("selectPreferredStyle").value = sourceLoc;
+    }
+    /* Initialises the preferred style sheet:
+       1. if there is a stored value then use that
+          otherwise select the default
+       2. set both the css link href & the drop down menu selected option
+    */
+    function initStyleSource () {
+      var preferredStyle = localStorage.getItem("stylefile");
+      if (preferredStyle !== null) {
+        setStyleSource(preferredStyle);
+      } else {
+        setStyleSource("default");
+      };
+    }
+    function saveStyleSource (preferredStyle) {
+      localStorage.stylefile = preferredStyle;
+    }
+    </script>
+</head>
+<body class="namespace">
+<header>
+  <strong>Idris2Doc</strong> : Control.Permutation.Types
+  <nav><a href="../index.html">Index</a>
+  <select id="selectPreferredStyle">
+    <option value="default">Default</option>
+<option value="alternative">Alternative</option>
+<option value="blackandwhite">Black & White</option>
+
+  </select>
+  </nav>
+  <script>
+  /* We start by initialising the style source */
+  initStyleSource();
+  /* This listens for changes on the drop down menu and updates the
+     css used for the current page when a selection is made.
+  */
+  document.getElementById("selectPreferredStyle").addEventListener("change", function(){
+    var selected = this.options[this.selectedIndex].value; /* the option chosen */
+    setStyleSource (selected);
+    saveStyleSource (selected);
+  });
+</script>
+</header>
+<div class="container"><div id="moduleHeader"><h1>Control.Permutation.Types</h1><pre></pre></div><dl class="decls"><dt id="Control.Permutation.Types.Permutation"><!-- ann ignored START -->data<!-- ann END -->&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;:&ensp;<span class="type resolved" title="Prelude.Types.Nat"><span class="name type">Nat</span></span>&ensp;-&gt;&ensp;<span class="name type">Type</span></dt><dd><pre>  This&ensp;is&ensp;something&ensp;like&ensp;`Vector&ensp;k&ensp;a`,&ensp;except&ensp;we&ensp;restrict&ensp;ourselves&ensp;to&ensp;only&ensp;1,...,n&ensp;for&ensp;`Permutation&ensp;n`.</pre><br>  <b>Totality</b>:&ensp;total<br>  <b>Constructors</b>:<br><dl class="decls">  <dt id="Control.Permutation.Types.Nil"><a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Nil"><span class="name constructor">Nil</span></a>&ensp;:&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<span class="name constructor">0</span></dt>  <dt id="Control.Permutation.Types.:*"><a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.:*"><span class="name constructor">(:*)</span></a>&ensp;:&ensp;<span class="implicit"><span class="name type">Fin</span></span>&ensp;(<span class="type resolved" title="Prelude.Types.S"><span class="name constructor">S</span></span>&ensp;<!-- ann ignored START -->n<!-- ann END -->)&ensp;-&gt;&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->&ensp;-&gt;&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;(<span class="type resolved" title="Prelude.Types.S"><span class="name constructor">S</span></span>&ensp;<!-- ann ignored START -->n<!-- ann END -->)</dt></dl></dd><dt id="Control.Permutation.Types.debug"><a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.debug"><span class="name function">debug</span></a>&ensp;:&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->&ensp;-&gt;&ensp;<span class="name type">String</span></dt><dd>  <b>Totality</b>:&ensp;total</dd><dt id="Control.Permutation.Types.invert"><a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.invert"><span class="name function">invert</span></a>&ensp;:&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->&ensp;-&gt;&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END --></dt><dd>  <b>Totality</b>:&ensp;total</dd><dt id="Control.Permutation.Types.toVector"><a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.toVector"><span class="name function">toVector</span></a>&ensp;:&ensp;<a class="type" href="Control.Permutation.Types.html#Control.Permutation.Types.Permutation"><span class="name type">Permutation</span></a>&ensp;<!-- ann ignored START -->n<!-- ann END -->&ensp;-&gt;&ensp;<span class="implicit"><span class="name type">Vect</span></span>&ensp;<!-- ann ignored START -->n<!-- ann END -->&ensp;(<span class="implicit"><span class="name type">Fin</span></span>&ensp;<!-- ann ignored START -->n<!-- ann END -->)</dt><dd>  <b>Totality</b>:&ensp;total</dd></dl></div><footer>Produced by Idris 2 version 0.5.1</footer></body></html>
