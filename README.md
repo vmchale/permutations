@@ -23,4 +23,4 @@ The `Show` instance for `Permutation` uses cycle notation. You can read more
 
 ### Documentation
 
-[Documentation (outdated)](https://vmchale.github.io/permutations/index.html).
+[Documentation](https://vmchale.github.io/permutations/index.html).
